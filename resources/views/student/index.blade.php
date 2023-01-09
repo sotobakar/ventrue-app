@@ -1,0 +1,1 @@
+@extends('student.layouts.app_new')
