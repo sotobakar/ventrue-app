@@ -31,7 +31,9 @@ class DatabaseSeeder extends Seeder
             EventCategorySeeder::class,
             EventSeeder::class,
             StudentSeeder::class,
-            AdminSeeder::class
+            AdminSeeder::class,
+            EventRegistrationSeeder::class,
+            EventMaterialSeeder::class,
         ]);
     }
 }

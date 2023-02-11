@@ -21,6 +21,7 @@ return new class extends Migration
             $table->enum('type', ['online', 'offline', 'hybrid']);
             $table->dateTime('registration_start')->nullable();
             $table->dateTime('registration_end')->nullable();
+            $table->boolean('attendance_open')->default(false);
             $table->dateTime('start')->nullable();
             $table->dateTime('end')->nullable();
             $table->longText('description');

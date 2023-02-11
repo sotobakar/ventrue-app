@@ -3,10 +3,65 @@
 @section('content')
 <div class="mx-auto px-8 max-w-7xl">
     <div class="bg-white p-4 lg:grid lg:grid-cols-3 lg:gap-x-8 xl:grid-cols-4 rounded-lg">
-        <aside class="px-6">
+        <aside class="md:px-6">
             <h2 class="sr-only">Filters</h2>
 
-            <div class="lg:block">
+            <div x-data="{ open: false }" class="block lg:hidden">
+                <div class="flex justify-between items-center">
+                    <h2 class="text-lg font-medium">Filter</h2>
+                    <button type="button" class="p-2">
+                        <i @click="open = ! open" class="far fa-bars text-2xl"></i>
+                    </button>
+                </div>
+                <form x-show="open" x-transition x-cloak class="space-y-5 divide-y divide-gray-200">
+                    <div>
+                        <fieldset>
+                            <legend class="block text-sm md:text-lg font-medium text-gray-900">Cari berdasarkan nama</legend>
+                            <div class="space-y-3 pt-2">
+                                <div class="flex items-center">
+                                    <input type="text" name="filter[name]" id="name" value="{{ request()->get('filter')['name'] ?? null }}"
+                                        class="block w-full rounded-md border-gray-300 shadow-sm focus:border-pink-500 focus:ring-pink-500 sm:text-sm"
+                                        placeholder="Nama event disini...">
+                                    <button type="submit">
+                                        <i class="ml-2 fas fa-search text-xl hover:text-pink-500"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+                    <div class="pt-4">
+                        <fieldset>
+                            <legend class="block text-sm md:text-lg font-medium text-gray-900">Kategori</legend>
+                            <div class="space-y-3 pt-6">
+                                @foreach($event_categories as $event_category)
+                                <div class="flex items-center">
+                                    <input name="filter[event_category][]" value="{{ $event_category->id }}" type="checkbox" {{ in_array($event_category->id, request()->get('filter')['event_category'] ?? []) ? 'checked' : ''}}
+                                        class="h-4 w-4 rounded border-gray-300 text-pink-600 focus:ring-pink-500">
+                                    <label for="event_category" class="ml-3 text-sm text-gray-600">{{
+                                        ucfirst($event_category->name) }}</label>
+                                </div>
+                                @endforeach
+                            </div>
+                        </fieldset>
+                    </div>
+
+                    <div class="pt-4">
+                        <fieldset>
+                            <legend class="block text-sm md:text-lg font-medium text-gray-900">Jenis</legend>
+                            <div class="space-y-3 pt-6">
+                                @foreach($types as $type)
+                                <div class="flex items-center">
+                                    <input name="filter[type][]" value="{{ $type }}" type="checkbox" {{ in_array($type, request()->get('filter')['type'] ?? []) ? 'checked' : ''}}
+                                        class="h-4 w-4 rounded border-gray-300 text-pink-600 focus:ring-pink-500">
+                                    <label class="ml-3 text-sm text-gray-600">{{ ucfirst($type) }}</label>
+                                </div>
+                                @endforeach
+                            </div>
+                        </fieldset>
+                    </div>
+                </form>
+            </div>
+            <div class="hidden lg:block">
                 <form class="space-y-5 divide-y divide-gray-200">
                     <div>
                         <fieldset>

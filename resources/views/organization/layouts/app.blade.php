@@ -9,10 +9,17 @@
     <link rel="shortcut icon" href="{{ asset('favicon.png') }}" type="image/x-icon">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <script defer src="https://unpkg.com/alpinejs@3.10.5/dist/cdn.min.js"></script>
+    <link rel="stylesheet" href="{{ asset('fontawesome/css/all.min.css')}}" />
+    <style>
+        [x-cloak] {
+            display: none !important;
+        }
+    </style>
     @stack('css')
 </head>
 
 <body class="h-full">
+    @stack('modals')
     <div>
         <!-- Off-canvas menu for mobile, show/hide based on off-canvas menu state. -->
         <div class="relative z-40 md:hidden" role="dialog" aria-modal="true">

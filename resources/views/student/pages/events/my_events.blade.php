@@ -18,7 +18,8 @@
                         class="h-full w-full object-cover object-center sm:h-full sm:w-full">
                 </div>
                 <div class="bg-white flex flex-1 flex-col space-y-2 p-4">
-                    @if(\Carbon\Carbon::parse($event->start)->gt(\Carbon\Carbon::now()) &&\Carbon\Carbon::parse($event->end)->lt(\Carbon\Carbon::now()))
+                    @if(\Carbon\Carbon::parse($event->start)->gt(\Carbon\Carbon::now())
+                    &&\Carbon\Carbon::parse($event->end)->lt(\Carbon\Carbon::now()))
                     <span
                         class="self-start inline-flex items-center rounded-full bg-amber-100 px-2.5 py-0.5 text-xs font-medium text-amber-800">Berakhir</span>
                     @elseif(\Carbon\Carbon::parse($event->end)->lessThan(\Carbon\Carbon::now()))
@@ -26,7 +27,8 @@
                         class="self-start inline-flex items-center rounded-full bg-red-100 px-2.5 py-0.5 text-xs font-medium text-red-800">Berakhir</span>
                     @else
                     <span
-                        class="self-start inline-flex items-center rounded-full bg-green-100 px-2.5 py-0.5 text-xs font-medium text-green-800">Belum Mulai</span>
+                        class="self-start inline-flex items-center rounded-full bg-green-100 px-2.5 py-0.5 text-xs font-medium text-green-800">Belum
+                        Mulai</span>
                     @endif
                     <h3 class="text-sm font-medium text-gray-900">
                         <a href="{{ route('student.my_events.detail', ['event' => $event->id]) }}">
@@ -44,9 +46,9 @@
             </div>
             @endforeach
         </div>
-        <div class="mt-4">
-            {{ $events->links() }}
-        </div>
     </section>
+    <div class="mt-4 flex justify-end bg-white rounded-md px-4 py-3">
+        {{ $events->links() }}
+    </div>
 </div>
 @endsection

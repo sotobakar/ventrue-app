@@ -43,7 +43,7 @@
                 class="absolute right-0 left-auto z-20 -ml-4 mt-3 w-screen max-w-md transform px-2 sm:px-0  lg:ml-0">
                 <div class="overflow-hidden rounded-lg shadow-lg ring-1 ring-black ring-opacity-5">
                     <div class="relative grid gap-6 bg-white px-5 py-6 sm:gap-8 sm:p-8">
-                        <a href="#" class="-m-3 flex items-start rounded-lg p-3 hover:bg-gray-100">
+                        <a href="{{ route('student.profile') }}" class="-m-3 flex items-start rounded-lg p-3 hover:bg-gray-100">
                             <i class="self-center flex-shrink-0 far fa-user text-pink-600 text-2xl"></i>
                             <div class="ml-4">
                                 <p class="text-base font-medium text-gray-900">Profil Saya</p>
@@ -51,7 +51,7 @@
                             </div>
                         </a>
 
-                        <a href="#" class="-m-3 flex items-start rounded-lg p-3 hover:bg-gray-100">
+                        <a href="{{ route('student.my_events') }}" class="-m-3 flex items-start rounded-lg p-3 hover:bg-gray-100">
                             <i class="self-center flex-shrink-0 far fa-calendar text-pink-600 text-2xl"></i>
                             <div class="ml-4">
                                 <p class="text-base font-medium text-gray-900">Acara Saya</p>
@@ -95,7 +95,7 @@
         From: "opacity-100 scale-100"
         To: "opacity-0 scale-95"
     -->
-<div x-show="open" @click.outside="open = false" x-cloak
+<div x-show="open" @click.outside="open = false" x-cloak x-transition
     class="absolute inset-x-0 top-0 z-10 origin-top-right transform p-2 transition md:hidden">
     <div class="overflow-hidden rounded-lg bg-white shadow-md ring-1 ring-black ring-opacity-5">
         <div class="flex items-center justify-between px-5 pt-4">
@@ -128,8 +128,8 @@
                 <a @click="open = !open"
                     class="block rounded-md px-3 py-2 text-base font-medium text-gray-700 hover:bg-gray-100 hover:text-gray-900">{{
                     Auth::user()->student->name }}</a>
-                <div x-show="open">
-                    <a
+                <div x-show="open" x-transition>
+                    <a href="{{ route('student.profile') }}"
                         class="block rounded-md px-3 py-2 text-base font-medium text-gray-700 hover:bg-gray-100 hover:text-gray-900">Profil Saya</a>
 
                     <a href="{{ route('student.my_events') }}"
@@ -141,7 +141,7 @@
                         class="block rounded-md px-3 py-2 text-base font-medium text-gray-700 hover:bg-gray-100 hover:text-gray-900">Sertifikat
                         Saya</a>
 
-                    <a
+                    <a href="{{ route('student.logout') }}"
                         class="block rounded-md px-3 py-2 text-base font-medium text-gray-700 hover:bg-gray-100 hover:text-gray-900">Keluar</a>
                 </div>
             </div>

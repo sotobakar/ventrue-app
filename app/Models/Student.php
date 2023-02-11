@@ -16,6 +16,7 @@ class Student extends Model
      */
     protected $fillable = [
         'name',
+        'phone',
         'sid',
         'year',
         'image',
@@ -30,6 +31,15 @@ class Student extends Model
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id', 'id');
+    }
+
+    /**
+     * The faculty of the student.
+     * 
+     */
+    public function faculty()
+    {
+        return $this->belongsTo(Faculty::class, 'faculty_id', 'id');
     }
 
     /**
