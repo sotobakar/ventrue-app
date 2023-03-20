@@ -16,6 +16,7 @@ class Student extends Model
      */
     protected $fillable = [
         'name',
+        'phone',
         'sid',
         'year',
         'image',
@@ -33,11 +34,29 @@ class Student extends Model
     }
 
     /**
+     * The faculty of the student.
+     * 
+     */
+    public function faculty()
+    {
+        return $this->belongsTo(Faculty::class, 'faculty_id', 'id');
+    }
+
+    /**
      * The events the student is registered to.
      * 
      */
     public function registered_events()
     {
         return $this->belongsToMany(Event::class, 'event_registrations', 'student_id', 'event_id');
+    }
+
+    /**
+     * The verification of the student.
+     * 
+     */
+    public function verification()
+    {
+        return $this->hasOne(StudentVerification::class, 'student_id');
     }
 }

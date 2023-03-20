@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Organization extends Model
 {
     use HasFactory;
-    
+
     /**
      * The attributes that are mass assignable.
      *
@@ -32,5 +32,14 @@ class Organization extends Model
     public function events()
     {
         return $this->hasMany(Event::class, 'organization_id', 'id');
+    }
+
+    /**
+     * The faculty of the organization
+     * 
+     */
+    public function faculty()
+    {
+        return $this->belongsTo(Faculty::class, 'faculty_id');
     }
 }

@@ -1,28 +1,6 @@
 @extends('organization.layouts.guest')
 
 @section('content')
-<!--
-  This example requires some changes to your config:
-  
-  ```
-  // tailwind.config.js
-  module.exports = {
-    // ...
-    plugins: [
-      // ...
-      require('@tailwindcss/forms'),
-    ],
-  }
-  ```
--->
-<!--
-  This example requires updating your template:
-
-  ```
-  <html class="h-full bg-gray-50">
-  <body class="h-full">
-  ```
--->
 <div class="bg-gray-900 flex min-h-full flex-col justify-center py-12 sm:px-6 lg:px-8">
   <div class="mb-4 sm:mx-auto sm:w-full sm:max-w-md">
     <img class="mx-auto h-auto w-64" src="{{ asset('img/logo.png')}}" alt="VENTRUE">

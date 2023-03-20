@@ -5,12 +5,34 @@ namespace App\Http\Controllers\Student;
 use App\Http\Controllers\Controller;
 use App\Models\Event;
 use App\Models\EventCategory;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
 
 class EventController extends Controller
 {
+    /**
+     * Instantiate a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware(function ($request, $next) {
+
+            if ($request->user() && $request->user()->organization) {
+                Auth::logout();
+                $request->session()->invalidate();
+                $request->session()->regenerateToken();
+            }
+
+
+            return $next($request);
+        });
+    }
+
     /**
      * Get events list.
      * 
@@ -70,6 +92,17 @@ class EventController extends Controller
      */
     public function remind(Request $request, Event $event)
     {
+        $validated = $request->validate([
+            'minutes_before' => ['required', 'integer', 'max:60']
+        ]);
+
+        // Create event reminder
+        $event->reminders()->create([
+            'student_id' => $request->user()->student->id,
+            'remind_at' => Carbon::parse($event->start)->subMinutes($validated['minutes_before'])
+        ]);
+
+        return back();
     }
 
     /**
@@ -89,8 +122,46 @@ class EventController extends Controller
      * My event detail
      * 
      */
-    public function my_event_detail(Request $request)
+    public function my_event_detail(Request $request, Event $event)
     {
+        $feedback_exists = $event->feedbacks()->where('student_id', $request->user()->student->id)->exists();
 
+        $reminder = $event->reminders()->where('student_id', $request->user()->student->id)->first();
+
+        return view('student.pages.events.my_event_detail', [
+            'event' => $event,
+            'feedback_exists' => $feedback_exists,
+            'reminder'  => $reminder
+        ]);
+    }
+
+    /**
+     * Attend event
+     * 
+     */
+    public function attend(Request $request, Event $event)
+    {
+        $event->attendees()->syncWithoutDetaching([$request->user()->student->id]);
+        return back();
+    }
+
+    /**
+     * Submit feedback
+     * 
+     */
+    public function submit_feedback(Request $request, Event $event)
+    {
+        $validated = $request->validate([
+            'rating' => ['required', 'integer', 'min:1', 'max:5'],
+            'body' => ['required']
+        ]);
+
+        $feedback = $event->feedbacks()->make(array_merge($validated, [
+            'student_id' => $request->user()->student->id
+        ]));
+
+        $feedback->save();
+
+        return back();
     }
 }

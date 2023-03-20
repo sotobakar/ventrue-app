@@ -30,7 +30,7 @@
                 <rect width="364" height="384" fill="url(#eab71dd9-9d7a-47bd-8044-256344ee00d0)" />
             </svg>
         </div>
-        <div x-data="{ open: false }" class="relative pt-6 pb-8 sm:pb-12">
+        <div x-data="{ open: false }" class="relative py-4 sm:py-8">
             @include('student.components.navbar')
             <main class="mt-4 sm:mt-8">
                 @yield('content')

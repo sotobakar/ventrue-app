@@ -21,6 +21,7 @@ class StudentSeeder extends Seeder
             [
                 'email' => 'patricks@upnvj.ac.id',
                 'name' => 'Patrick Santino',
+                'phone' => '081316472184',
                 'sid' => '1910512012',
                 'year' => '2019',
                 'faculty' => 'FIK',
@@ -29,6 +30,7 @@ class StudentSeeder extends Seeder
             [
                 'email' => 'radityara@upnvj.ac.id',
                 'name' => 'Raditya Rahardyansyah Rifat',
+                'phone' => '0813111112222',
                 'sid' => '1910512014',
                 'year' => '2019',
                 'faculty' => 'FIK',
@@ -37,6 +39,7 @@ class StudentSeeder extends Seeder
             [
                 'email' => 'laurentius@upnvj.ac.id',
                 'name' => 'Laurentius Wijaya',
+                'phone' => '081333334444',
                 'sid' => '1910512016',
                 'year' => '2019',
                 'faculty' => 'FIK',
@@ -45,6 +48,7 @@ class StudentSeeder extends Seeder
             [
                 'email' => 'marcusra@upnvj.ac.id',
                 'name' => 'Marcus Rashford',
+                'phone' => '081355556666',
                 'sid' => '1910512018',
                 'year' => '2019',
                 'faculty' => 'FIK',
@@ -53,6 +57,7 @@ class StudentSeeder extends Seeder
             [
                 'email' => 'lulun@upnvj.ac.id',
                 'name' => 'Lulu Nailufar',
+                'phone' => '081377778888',
                 'sid' => '1910512010',
                 'year' => '2019',
                 'faculty' => 'FIK',
@@ -70,6 +75,7 @@ class StudentSeeder extends Seeder
 
             $user->student()->create([
                 'name' => $student['name'],
+                'phone' => $student['phone'],
                 'faculty_id' => $faculty->id,
                 'image' => $student['image'],
                 'sid' => $student['sid'],

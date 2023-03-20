@@ -2,10 +2,6 @@
 
 namespace Database\Seeders;
 
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-
-use App\Models\Faculty;
-use App\Models\User;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Role;
 
@@ -31,7 +27,12 @@ class DatabaseSeeder extends Seeder
             EventCategorySeeder::class,
             EventSeeder::class,
             StudentSeeder::class,
-            AdminSeeder::class
+            AdminSeeder::class,
+            EventRegistrationSeeder::class,
+            EventMaterialSeeder::class,
+            HighlightedEventSeeder::class,
+            ApproverSeeder::class,
+            EventApprovalSeeder::class
         ]);
     }
 }

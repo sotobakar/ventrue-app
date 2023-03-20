@@ -1,55 +1,145 @@
 @extends('organization.layouts.app')
 
 @section('content')
-<h1 class="text-2xl font-semibold text-gray-900">Acara</h1>
-<div class="">
-    <div class="mt-8 sm:flex sm:items-center">
-        <div class="mt-4 sm:mt-0 sm:flex-none">
-            <a href="{{ route('organization.events.create') }}"
-                class="inline-flex items-center justify-center rounded-md border border-transparent bg-pink-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-pink-700 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-2 sm:w-auto">Buat Acara</a>
-        </div>
-    </div>
-    <div class="mt-8 flex flex-col">
-        <div class="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
-            <div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
-                <div class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
-                    <table class="min-w-full divide-y divide-gray-300">
-                        <thead class="bg-gray-50">
-                            <tr>
-                                <th scope="col"
-                                    class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6">Name
-                                </th>
-                                <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Waktu Mulai
-                                </th>
-                                <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Waktu Selesai
-                                </th>
-                                <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Jenis
-                                </th>
-                                <th scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-6">
-                                    <span class="sr-only">Ubah</span>
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody class="divide-y divide-gray-200 bg-white">
-                            @foreach($events as $event)
-                            <tr>
-                                <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
-                                    {{ $event->name }}</td>
-                                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ \Carbon\Carbon::parse($event->start)->translatedFormat("l, j F Y H:i") }}</td>
-                                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ \Carbon\Carbon::parse($event->end)->translatedFormat("l, j F Y H:i") }}</td>
-                                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ ucfirst($event->type) }}</td>
-                                <td
-                                    class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
-                                    <a href="{{ route('organization.events.detail', ['event' => $event->id]) }}" class="text-pink-600 hover:text-pink-900">Ubah</a>
-                                </td>
-                            </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
+    <h1 class="text-2xl font-semibold text-gray-900">Edit Acara</h1>
+    <div class="overflow-hidden">
+        <div class="relative mx-auto max-w-xl">
+            <div class="mt-6">
+                <div class="mb-4">
+                    @include('organization.components.alerts.success')
+                    @include('organization.components.alerts.errors', ['activity' => 'update profile'])
                 </div>
+                <form action="{{ route('organization.events.update', ['event' => $event->id]) }}" method="POST"
+                    class="grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-8" enctype="multipart/form-data"
+                    x-data="{ type: '{{ $event->type }}' }">
+                    @csrf
+                    @method('PUT')
+                    <div x-data="imageViewer('{{ asset('storage/' . $event->banner) }}')" class="sm:col-span-2">
+                        <!-- Show the image -->
+                        <template x-if="imageUrl">
+                            <img :src="imageUrl" class="mb-2 mx-auto object-cover rounded border border-gray-200"
+                                style="width: 500px; height: 281px;">
+                        </template>
+                        <label for="banner" class="block text-sm font-medium text-gray-700">Upload Banner Acara</label>
+                        <div class="mt-1">
+                            <input type="file" accept="image/*" @change="fileChosen" name="banner"
+                                id="banner"
+                                class="block w-full rounded-md border border-gray-300 py-3 px-4 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                        </div>
+                    </div>
+                    <div class="sm:col-span-2">
+                        <label for="name" class="block text-sm font-medium text-gray-700">Nama Acara</label>
+                        <div class="mt-1">
+                            <input type="text" required name="name" id="name" autocomplete="given-name" value="{{ $event->name }}"
+                                class="block w-full rounded-md border border-gray-300 py-3 px-4 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                        </div>
+                    </div>
+                    <div class="sm:col-span-2">
+                        <label for="type" class="block text-sm font-medium text-gray-700">Jenis Acara</label>
+                        <div class="mt-1">
+                            <select x-model="type" id="type" name="type"
+                                class="block w-full rounded-md border border-gray-300 py-3 px-4 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                                @foreach ($types as $type)
+                                    <option value="{{ $type }}" <?= $event->type == $type ? 'selected' : '' ?> >{{ ucfirst($type) }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="sm:col-span-2">
+                        <label for="event_category" class="block text-sm font-medium text-gray-700">Kategori Acara</label>
+                        <div class="mt-1">
+                            <select id="event_category" name="event_category"
+                                class="block w-full rounded-md border border-gray-300 py-3 px-4 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                                @foreach ($event_categories as $event_category)
+                                    <option value="{{ $event_category->id }}" <?= $event->event_category->id == $event_category->id ? 'selected' : '' ?> >{{ ucfirst($event_category->name) }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="sm:col-span-2">
+                        <label for="location" class="block text-sm font-medium text-gray-700">Lokasi</label>
+                        <div class="mt-1">
+                            <input type="text" required name="location" id="location" autocomplete="location" value="{{ $event->location }}"
+                                class="block w-full rounded-md border border-gray-300 py-3 px-4 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                        </div>
+                    </div>
+                    <div class="sm:col-span-2" x-show="type != 'offline'">
+                        <label for="meeting_link" class="block text-sm font-medium text-gray-700">Meeting Link</label>
+                        <div class="mt-1">
+                            <input type="text" name="meeting_link" id="meeting_link" value="{{ $event->meeting_link }}"
+                                class="block w-full rounded-md border border-gray-300 py-3 px-4 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                        </div>
+                    </div>
+                    <div class="sm:col-span-2">
+                        <label for="start" class="block text-sm font-medium text-gray-700">Waktu Mulai Acara</label>
+                        <div class="mt-1">
+                            <input type="datetime-local" required id="start" name="start" value="{{ $event->start }}"
+                                class="block w-full rounded-md border border-gray-300 py-3 px-4 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" />
+                        </div>
+                    </div>
+                    <div class="sm:col-span-2">
+                        <label for="end" class="block text-sm font-medium text-gray-700">Waktu Selesai Acara</label>
+                        <div class="mt-1">
+                            <input type="datetime-local" required id="end" name="end" value="{{ $event->end }}"
+                                class="block w-full rounded-md border border-gray-300 py-3 px-4 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" />
+                        </div>
+                    </div>
+                    <div class="sm:col-span-2">
+                        <label for="registration_start" class="block text-sm font-medium text-gray-700">Pendaftaran
+                            Dibuka</label>
+                        <div class="mt-1">
+                            <input type="datetime-local" required id="registration_start" name="registration_start" value="{{ $event->registration_start }}"
+                                class="block w-full rounded-md border border-gray-300 py-3 px-4 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" />
+                        </div>
+                    </div>
+                    <div class="sm:col-span-2">
+                        <label for="registration_end" class="block text-sm font-medium text-gray-700">Pendaftaran
+                            Ditutup</label>
+                        <div class="mt-1">
+                            <input type="datetime-local" required id="registration_end" name="registration_end" value="{{ $event->registration_end }}"
+                                class="block w-full rounded-md border border-gray-300 py-3 px-4 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" />
+                        </div>
+                    </div>
+
+                    <div class="sm:col-span-2">
+                        <label for="description" class="block text-sm font-medium text-gray-700">Deskripsi (min. 50
+                            karakter)</label>
+                        <div class="mt-1">
+                            <textarea id="description" name="description" rows="4" required minlength="50"
+                                class="block w-full rounded-md border border-gray-300 py-3 px-4 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">{{ $event->description }}</textarea>
+                        </div>
+                    </div>
+                    <div class="sm:col-span-2">
+                        <button type="submit"
+                            class="inline-flex w-full items-center justify-center rounded-md border border-transparent bg-pink-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-pink-700 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-2">Update
+                            Acara</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
-</div>
-
 @endsection
+
+@push('scripts')
+    <script>
+        function imageViewer(src = null) {
+            return {
+                imageUrl: src,
+
+                fileChosen(event) {
+                    this.fileToDataUrl(event, src => this.imageUrl = src)
+                },
+
+                fileToDataUrl(event, callback) {
+                    if (!event.target.files.length) return
+
+                    let file = event.target.files[0],
+                        reader = new FileReader()
+
+                    reader.readAsDataURL(file)
+                    reader.onload = e => callback(e.target.result)
+                },
+            }
+        }
+    </script>
+@endpush

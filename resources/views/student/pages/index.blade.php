@@ -36,14 +36,14 @@
                 <!-- Swiper -->
                 <div class="swiper mySwiper" style="height: 400px;">
                     <div class="swiper-wrapper">
-                        @foreach($events as $event)
+                        @foreach($contents as $content)
                         <div class="swiper-slide">
                             <div class="flex flex-col">
-                                <img class="rounded-md" src="{{ asset('storage/' . $event->banner) }}"
+                                <img class="rounded-md" src="{{ asset('storage/' . $content->event->banner) }}"
                                     alt="Event Banner">
                                 <div class="mt-4">
-                                    <h3 class="text-center text-2xl md:text-3xl font-bold text-pink-700">
-                                        {{ $event->name }}</h3>
+                                    <h3 class="text-center text-xl md:text-2xl font-bold text-pink-700">
+                                        {{ $content->event->name }}</h3>
                                 </div>
                             </div>
                         </div>

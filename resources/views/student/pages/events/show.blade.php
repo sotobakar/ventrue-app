@@ -7,42 +7,49 @@
         @include('student.components.alerts.success')
     </div>
     @endif
-    <h1 class="text-4xl font-bold">{{ $event->name }}</h1>
-    <img class="mt-4 rounded-lg" src="{{ asset('storage/' . $event->banner)}}" alt="Gambar Event">
-    <div class="bg-white p-4 rounded-md text-gray-900 mt-4 flex">
-        <img class="w-20 border-2 border-gray-900" src="{{ asset('storage/' . $event->organization->image)}}" alt="">
-        <div class="ml-8">
-            <h2 class="font-medium text-base">Penyelenggara</h2>
-            <h3 class="font-medium text-lg text-pink-500">{{ $event->organization->name }}</h3>
+    <div class="grid grid-cols-3 gap-x-8">
+        <div class="col-span-3 md:col-span-2">
+            <img class="mt-4 rounded-lg" src="{{ asset('storage/' . $event->banner)}}" alt="Gambar Event">
+            <h1 class="mt-4 text-4xl font-bold">{{ $event->name }}</h1>
+        </div>
+
+        <div class="col-span-3 md:col-span-1">
+            <div class="bg-white p-4 rounded-md text-gray-900 mt-4 flex">
+                <img class="w-20" src="{{ asset('storage/' . $event->organization->image)}}" alt="">
+                <div class="ml-8">
+                    <h2 class="font-medium text-base">Penyelenggara</h2>
+                    <h3 class="font-medium text-lg text-pink-500">{{ $event->organization->name }}</h3>
+                </div>
+            </div>
+            <dl class="my-4 space-y-6">
+                <div>
+                    <dt class="flex items-center">
+                        <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-pink-500 text-white">
+                            <i class="far fa-thumbtack text-3xl"></i>
+                        </div>
+                        <p class="ml-4 text-lg font-medium leading-6 text-white">{{ $event->location }}</p>
+                    </dt>
+                </div>
+                <div>
+                    <dt class="flex items-center">
+                        <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-pink-500 text-white">
+                            <i class="far fa-globe text-3xl"></i>
+                        </div>
+                        <p class="ml-4 text-lg font-medium leading-6 text-white">{{ ucwords($event->type) }}</p>
+                    </dt>
+                </div>
+                <div>
+                    <dt class="flex items-center">
+                        <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-pink-500 text-white">
+                            <i class="far fa-calendar text-3xl"></i>
+                        </div>
+                        <p class="ml-4 text-lg font-medium leading-6 text-white">{{
+                            \Carbon\Carbon::parse($event->start)->translatedFormat('l, j F H:i') }}</p>
+                    </dt>
+                </div>
+            </dl>
         </div>
     </div>
-    <dl class="my-4 space-y-6">
-        <div>
-            <dt class="flex items-center">
-                <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-pink-500 text-white">
-                    <i class="far fa-thumbtack text-3xl"></i>
-                </div>
-                <p class="ml-4 text-lg font-medium leading-6 text-white">{{ $event->location }}</p>
-            </dt>
-        </div>
-        <div>
-            <dt class="flex items-center">
-                <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-pink-500 text-white">
-                    <i class="far fa-globe text-3xl"></i>
-                </div>
-                <p class="ml-4 text-lg font-medium leading-6 text-white">{{ ucwords($event->type) }}</p>
-            </dt>
-        </div>
-        <div>
-            <dt class="flex items-center">
-                <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-pink-500 text-white">
-                    <i class="far fa-calendar text-3xl"></i>
-                </div>
-                <p class="ml-4 text-lg font-medium leading-6 text-white">{{
-                    \Carbon\Carbon::parse($event->start)->translatedFormat('l, j F H:i') }}</p>
-            </dt>
-        </div>
-    </dl>
     <div class="mt-4">
         <h2 class="font-medium text-xl">Description</h2>
         <p class="mt-2">{{ $event->description }}</p>
@@ -74,10 +81,6 @@
                 Daftar
             </button>
             @endif
-            <button type="button"
-                class="inline-flex items-center rounded-md border border-transparent bg-gray-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2">
-                Ingatkan Saya
-            </button>
         </div>
     </div>
 </div>

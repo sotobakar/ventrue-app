@@ -2,8 +2,11 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use PHPUnit\Framework\MockObject\Builder\Stub;
 
 class Event extends Model
 {
@@ -14,7 +17,29 @@ class Event extends Model
      *
      * @var array
      */
-    protected $fillable = ['name', 'banner', 'location', 'meeting_link', 'type', 'registration_start', 'registration_end', 'start', 'end', 'description', 'organization_id', 'event_category_id'];
+    protected $fillable = ['name', 'banner', 'location', 'meeting_link', 'type', 'registration_start', 'registration_end', 'start', 'end', 'description', 'organization_id', 'event_category_id', 'attendance_open', 'certificate_link'];
+
+    /**
+     * Get the event's status.
+     *
+     * @return \Illuminate\Database\Eloquent\Casts\Attribute
+     */
+    protected function status(): Attribute
+    {
+        return Attribute::make(
+            get: function ($value, $attributes) {
+                if (Carbon::now()->greaterThan(Carbon::parse($attributes['end']))) {
+                    return "Selesai";
+                }
+
+                if (Carbon::now()->greaterThan(Carbon::parse($attributes['start']))) {
+                    return "Sedang berlangsung";
+                }
+
+                return "Belum dimulai";
+            },
+        );
+    }
 
     /**
      * The organization that owns the event.
@@ -41,5 +66,50 @@ class Event extends Model
     public function event_category()
     {
         return $this->belongsTo(EventCategory::class, 'event_category_id', 'id');
+    }
+
+    /**
+     * The materials of the event 
+     * 
+     */
+    public function materials()
+    {
+        return $this->hasMany(EventMaterial::class, 'event_id', 'id');
+    }
+
+    /**
+     * The feedbacks of the event 
+     * 
+     */
+    public function feedbacks()
+    {
+        return $this->hasMany(EventFeedback::class, 'event_id', 'id');
+    }
+
+    /**
+     * The people who attend the event
+     * 
+     */
+    public function attendees()
+    {
+        return $this->belongsToMany(Student::class, 'event_attendances', 'event_id', 'student_id')->withTimestamps();
+    }
+
+    /**
+     * The reminders of the event
+     * 
+     */
+    public function reminders()
+    {
+        return $this->hasMany(EventReminder::class, 'event_id');
+    }
+
+    /**
+     * The approval of the event
+     * 
+     */
+    public function approval()
+    {
+        return $this->hasOne(EventApproval::class, 'event_id');
     }
 }
