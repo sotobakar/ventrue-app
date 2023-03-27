@@ -49,8 +49,15 @@
                                         <td
                                             class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
                                             {{ $approval->event_id }}</td>
-                                        <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                                            {{ $approval->event_id }}
+                                        <td @class([
+                                            'whitespace-nowrap px-3 py-4 text-sm',
+                                            'text-red-500' =>
+                                                $approval->status == config('constants.EVENT.APPROVAL.STATUS.0'),
+                                            'text-green-500' =>
+                                                $approval->status == config('constants.EVENT.APPROVAL.STATUS.1'),
+                                        ])
+                                            class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                                            {{ $approval->status }}
                                         </td>
                                         <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                                             {{ $approval->approved_at ? \Carbon\Carbon::parse($approval->approved_at)->translatedFormat('l, j F Y H:i') : 'Belum' }}
@@ -62,8 +69,17 @@
                                         </td>
                                         <td
                                             class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
-                                            <a href="{{ route('organization.approvals.send', ['approval' => $approval->id]) }}"
-                                                class="text-pink-600 hover:text-pink-900">Kirim</a>
+                                            <form id="{{ 'send_approval_' . $approval->id }}" class="hidden"
+                                                action="{{ route('organization.approvals.send', ['approval' => $approval->id]) }}"
+                                                method="post">
+                                                @csrf
+                                            </form>
+                                            <button {{ $approval->status == config('constants.EVENT.APPROVAL.STATUS.1') ? 'disabled' : '' }}
+                                                form="{{ 'send_approval_' . $approval->id }}" type="submit"
+                                                @class([
+                                                    'text-pink-600 hover:text-pink-900' => $approval->status == config('constants.EVENT.APPROVAL.STATUS.0'),
+                                                    'text-gray-300' => $approval->status == config('constants.EVENT.APPROVAL.STATUS.1'),
+                                                ])>Kirim</button>
                                         </td>
                                     </tr>
                                 @endforeach

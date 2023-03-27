@@ -26,7 +26,7 @@ class EventApproval extends Model
     {
         return Attribute::make(
             get: function ($value, $attributes) {
-                return !is_null($attributes['approved_at']);
+                return config('constants.EVENT.APPROVAL.STATUS')[(int) boolval($attributes['approved_at'])];
             },
         );
     }

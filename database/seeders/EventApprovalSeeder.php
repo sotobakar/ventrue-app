@@ -17,7 +17,7 @@ class EventApprovalSeeder extends Seeder
     public function run()
     {
         $organization = Organization::where('name', 'KSM Android')->first();
-        $events = Event::where('organization_id', $organization->id)->get();
+        $events = Event::where('organization_id', $organization->id)->limit(1)->get();
 
         foreach ($events as $event) {
             $approval = $event->approval()->create([

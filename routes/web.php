@@ -201,8 +201,7 @@ Route::prefix('/admin')->group(function () {
         // Update penyetuju
         Route::put('/penyetuju/{approver}', [AdminApprovalController::class, 'update_approver'])->name('admin.approvers.update');
 
-        // TODO: Edit Email Penyetuju (sesuai tingkat dan fakultas)
-
-        // TODO: Setuju Proposal (URL dari email)
+        // Setuju Proposal (URL dari email)
+        Route::get('/persetujuan/{approval}', [AdminApprovalController::class, 'approve'])->name('admin.approvals.approve')->withoutMiddleware(['admin']);
     });
 });

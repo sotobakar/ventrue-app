@@ -29,14 +29,31 @@ class Event extends Model
         return Attribute::make(
             get: function ($value, $attributes) {
                 if (Carbon::now()->greaterThan(Carbon::parse($attributes['end']))) {
-                    return "Selesai";
+                    return config('constants.EVENT.STATUS.2');
                 }
 
                 if (Carbon::now()->greaterThan(Carbon::parse($attributes['start']))) {
-                    return "Sedang berlangsung";
+                    return config('constants.EVENT.STATUS.1');
                 }
 
-                return "Belum dimulai";
+                return config('constants.EVENT.STATUS.0');
+            },
+        );
+    }
+
+    /**
+     * Check if the event is verified.
+     * @return \Illuminate\Database\Eloquent\Casts\Attribute
+     */
+    protected function verified(): Attribute
+    {
+        return Attribute::make(
+            get: function ($value, $attributes) {
+                if ($this->approval && $this->approval->status == config('constants.EVENT.APPROVAL.STATUS.1')) { 
+                    return true;
+                } else {
+                    return false;
+                }
             },
         );
     }

@@ -121,6 +121,12 @@
                 @endif
                 @foreach($events as $event)
                 <div class="group relative flex flex-col overflow-hidden rounded-lg border border-gray-200 bg-white">
+                    @if($event->verified)
+                    <div class="z-10 absolute top-2 left-2 rounded-lg py-1 px-2 bg-white flex items-center text-green-700 text-sm sm:text-base select-none">
+                        <i class="far fa-shield-check"></i>
+                        <span class="ml-2 font-medium">Verified</span>
+                    </div>
+                    @endif
                     <div class="bg-gray-200 group-hover:opacity-75 sm:aspect-none sm:h-48">
                         <img src="{{ asset('storage/' . $event->banner) }}"
                             alt="Eight shirts arranged on table in black, olive, grey, blue, white, red, mustard, and green."
