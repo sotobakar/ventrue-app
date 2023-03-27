@@ -193,6 +193,10 @@
             <main class="flex-1">
                 <div class="py-6">
                     <div class="mx-auto max-w-7xl px-4 sm:px-6 md:px-8">
+                        <div class="mb-4">
+                            @include('organization.components.alerts.success')
+                            @include('organization.components.alerts.errors')
+                        </div>
                         @yield('content')
                     </div>
                 </div>

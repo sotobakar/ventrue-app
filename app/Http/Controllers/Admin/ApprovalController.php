@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Approver;
+use App\Models\EventApproval;
 use App\Models\Faculty;
 use Illuminate\Http\Request;
 
@@ -42,8 +43,18 @@ class ApprovalController extends Controller
      * Approve request (url must be signed).
      * 
      */
-    public function approve(Request $request)
+    public function approve(Request $request, EventApproval $approval)
     {
-        
+        // Verify if request is signed and not expired
+        if (!$request->hasValidSignature() || !is_null($approval->approved_at)) {
+            abort(403);
+        } else {
+            // Approve request
+            $approval->update([
+                'approved_at' => now()
+            ]);
+
+            return redirect()->route('student.events.detail', ['event' => $approval->event->id])->with('success', 'Acara sudah berhasil diverifikasi!');
+        }
     }
 }

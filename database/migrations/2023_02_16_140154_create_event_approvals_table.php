@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('event_approvals', function (Blueprint $table) {
             $table->id();
             $table->foreignId('event_id')->constrained('events')->cascadeOnDelete();
-            $table->dateTime('approved_at')->nullable()->useCurrent();
+            $table->dateTime('approved_at')->nullable();
             $table->timestamps();
         });
     }
