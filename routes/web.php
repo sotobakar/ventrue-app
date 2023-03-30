@@ -196,13 +196,19 @@ Route::prefix('/admin')->group(function () {
 
         // TODO: Detail Acara
 
-        // TODO: Hapus Acara
+        Route::prefix('/acara')->group(function () {
+            // List Acara
+            Route::get('/', [AdminEventController::class, 'index'])->name('admin.events');
 
-        // TODO: Detail Verifikasi Mahasiswa
-        Route::get('/mahasiswa/{student}/verifikasi', [AdminStudentController::class, 'verification_detail'])->name('admin.students.verification');
+            // Edit Event
+            Route::get('/{event:id}/edit', [AdminEventController::class, 'edit'])->name('admin.events.edit');
 
-        // TODO: Action untuk Permohonan Verifikasi Mahasiswa
-        Route::post('/mahasiswa/{student}/verifikasi', [AdminStudentController::class, 'show']);
+            // Update Event
+            Route::put('/{event:id}', [AdminEventController::class, 'update'])->name('admin.events.update');
+
+            // Delete Event
+            Route::delete('/{event:id}', [AdminEventController::class, 'delete'])->name('admin.events.delete');
+        });
 
         // Lihat konten landing page
         Route::get('/konten', [AdminContentController::class, 'index'])->name('admin.content');

@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -49,7 +50,7 @@ class Event extends Model
     {
         return Attribute::make(
             get: function ($value, $attributes) {
-                if ($this->approval && $this->approval->status == config('constants.EVENT.APPROVAL.STATUS.1')) { 
+                if ($this->approval && $this->approval->status == config('constants.EVENT.APPROVAL.STATUS.1')) {
                     return true;
                 } else {
                     return false;
@@ -128,5 +129,23 @@ class Event extends Model
     public function approval()
     {
         return $this->hasOne(EventApproval::class, 'event_id');
+    }
+
+    /**
+     * Filter scope for event start datetime
+     * 
+     */
+    public function scopeFrom(Builder $query, $date): Builder
+    {
+        return $query->where('start', '>=', Carbon::parse($date));
+    }
+
+    /**
+     * Filter scope for event end datetime
+     * 
+     */
+    public function scopeTo(Builder $query, $date): Builder
+    {
+        return $query->where('end', '<=', Carbon::parse($date));
     }
 }
