@@ -168,8 +168,23 @@ Route::prefix('/admin')->group(function () {
         // List Ormawa
         Route::get('/ormawa', [AdminOrganizationController::class, 'index'])->name('admin.organizations');
 
+        // Form Create Ormawa
+        Route::get('/ormawa/buat', [AdminOrganizationController::class, 'create'])->name('admin.organizations.create');
+
         // Detail Ormawa
         Route::get('/ormawa/{organization}', [AdminOrganizationController::class, 'show'])->name('admin.organizations.detail');
+
+        // Create Ormawa
+        Route::post('/ormawa', [AdminOrganizationController::class, 'store']);
+
+        // Form Edit Ormawa
+        Route::get('/ormawa/{organization}/edit', [AdminOrganizationController::class, 'edit'])->name('admin.organizations.edit');
+
+        // Update Ormawa
+        Route::put('/ormawa/{organization}', [AdminOrganizationController::class, 'update'])->name('admin.organizations.update');
+
+        // Hapus Ormawa
+        Route::delete('/ormawa/{organization}', [AdminOrganizationController::class, 'delete'])->name('admin.organizations.delete');
 
         // List Mahasiswa
         Route::get('/mahasiswa', [AdminStudentController::class, 'index'])->name('admin.students');
