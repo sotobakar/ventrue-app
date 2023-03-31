@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class Student extends Model
 {
@@ -58,5 +59,29 @@ class Student extends Model
     public function verification()
     {
         return $this->hasOne(StudentVerification::class, 'student_id');
+    }
+
+    /**
+     * Check if student attended the event.
+     * 
+     */
+    public function didAttendEvent($event): bool
+    {
+        return DB::table('event_attendances')
+            ->where('event_id', $event->id)
+            ->where('student_id', $this->id)
+            ->exists();
+    }
+
+    /**
+     * Check if student submitted their feedback.
+     * 
+     */
+    public function didSubmitFeedback($event): bool
+    {
+        return DB::table('event_feedback')
+            ->where('event_id', $event->id)
+            ->where('student_id', $this->id)
+            ->exists();
     }
 }

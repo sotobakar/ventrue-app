@@ -47,8 +47,10 @@
             @endforeach
         </div>
     </section>
-    <div class="mt-4 flex justify-end bg-white rounded-md px-4 py-3">
-        {{ $events->links() }}
+    @if($events->hasPages())
+    <div class="mt-4">
+        {{ $events->links('vendor.pagination.simple-tailwind') }}
     </div>
+    @endif
 </div>
 @endsection
