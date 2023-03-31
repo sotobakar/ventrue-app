@@ -201,6 +201,9 @@ Route::prefix('/admin')->group(function () {
             Route::get('/', [AdminEventController::class, 'index'])->name('admin.events');
 
             // Edit Event
+            Route::get('/find', [AdminEventController::class, 'find'])->name('admin.events.find');
+
+            // Edit Event
             Route::get('/{event:id}/edit', [AdminEventController::class, 'edit'])->name('admin.events.edit');
 
             // Update Event
