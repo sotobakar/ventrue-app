@@ -36,6 +36,25 @@ class EventController extends Controller
     }
 
     /**
+     * Find event, return in json
+     * 
+     */
+    public function find(Request $request)
+    {
+        $event = Event::find($request->input('id'));
+        if ($event) {
+            return response()->json([
+                'message' => 'Acara ditemukan',
+                'data' => $event
+            ]);
+        } else {
+            return response()->json([
+                'message' => 'Acara tidak ditemukan'
+            ], 404);
+        }
+    }
+
+    /**
      * Edit event
      * 
      */
