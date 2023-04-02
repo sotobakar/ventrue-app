@@ -32,6 +32,8 @@ use Illuminate\Support\Facades\Route;
 // Front-facing / Student Section
 Route::middleware(['not_student'])->group(function () {
     Route::get('/', [StudentHomeController::class, 'index'])->name('student.home');
+
+    Route::get('/panduan', [StudentHomeController::class, 'help'])->name('student.help');
     Route::get('/login', [StudentAuthController::class, 'loginPage'])->name('student.login');
     Route::post('/login', [StudentAuthController::class, 'login']);
 
