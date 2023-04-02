@@ -2,31 +2,24 @@
     <div class="mx-auto max-w-7xl overflow-hidden py-12 px-4 sm:px-6 lg:px-8">
         <nav class="-mx-5 -my-2 flex flex-wrap justify-center" aria-label="Footer">
             <div class="px-5 py-2">
-                <a href="#" class="text-base text-gray-500 hover:text-gray-900">About</a>
+                <a href="{{ route('student.home') }}" class="text-base text-gray-300 hover:text-gray-200">Beranda</a>
             </div>
 
             <div class="px-5 py-2">
-                <a href="#" class="text-base text-gray-500 hover:text-gray-900">Blog</a>
+                <a href="{{ route('student.events') }}" class="text-base text-gray-300 hover:text-gray-200">Acara</a>
             </div>
 
             <div class="px-5 py-2">
-                <a href="#" class="text-base text-gray-500 hover:text-gray-900">Jobs</a>
+                <a href="{{ route('organization.login') }}"
+                    class="text-base text-gray-300 hover:text-gray-200">Ormawa</a>
             </div>
 
             <div class="px-5 py-2">
-                <a href="#" class="text-base text-gray-500 hover:text-gray-900">Press</a>
-            </div>
-
-            <div class="px-5 py-2">
-                <a href="#" class="text-base text-gray-500 hover:text-gray-900">Accessibility</a>
-            </div>
-
-            <div class="px-5 py-2">
-                <a href="#" class="text-base text-gray-500 hover:text-gray-900">Partners</a>
+                <a href="{{ route('student.help') }}" class="text-base text-gray-300 hover:text-gray-200">Panduan</a>
             </div>
         </nav>
         <div class="mt-8 flex justify-center space-x-6">
-            <a href="#" class="text-gray-400 hover:text-gray-500">
+            <a href="#" class="text-gray-300 hover:text-gray-500">
                 <span class="sr-only">Facebook</span>
                 <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                     <path fill-rule="evenodd"
@@ -35,7 +28,7 @@
                 </svg>
             </a>
 
-            <a href="#" class="text-gray-400 hover:text-gray-500">
+            <a href="#" class="text-gray-300 hover:text-gray-500">
                 <span class="sr-only">Instagram</span>
                 <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                     <path fill-rule="evenodd"
@@ -44,7 +37,7 @@
                 </svg>
             </a>
 
-            <a href="#" class="text-gray-400 hover:text-gray-500">
+            <a href="#" class="text-gray-300 hover:text-gray-500">
                 <span class="sr-only">Twitter</span>
                 <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                     <path
@@ -52,7 +45,7 @@
                 </svg>
             </a>
 
-            <a href="#" class="text-gray-400 hover:text-gray-500">
+            <a href="#" class="text-gray-300 hover:text-gray-500">
                 <span class="sr-only">GitHub</span>
                 <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                     <path fill-rule="evenodd"
@@ -61,7 +54,7 @@
                 </svg>
             </a>
 
-            <a href="#" class="text-gray-400 hover:text-gray-500">
+            <a href="#" class="text-gray-300 hover:text-gray-500">
                 <span class="sr-only">Dribbble</span>
                 <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                     <path fill-rule="evenodd"
@@ -70,7 +63,7 @@
                 </svg>
             </a>
         </div>
-        <p class="mt-8 text-center text-base text-gray-400">&copy; 2023 VENTRUE @ Veteran Event Us x Everyone.
+        <p class="mt-8 text-center text-base text-gray-300">&copy; 2023 VENTRUE @ Veteran Event Us x Everyone.
         </p>
     </div>
 </footer>
