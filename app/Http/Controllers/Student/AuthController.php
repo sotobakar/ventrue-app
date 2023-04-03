@@ -79,6 +79,7 @@ class AuthController extends Controller
             'email' => ['required', 'email', 'unique:users,email'],
             'password' => ['required', 'string'],
             'name' => ['required', 'string'],
+            'phone' => ['required', 'string'],
             'sid' => ['required', 'string', 'unique:students,sid', 'min:10'],
             'faculty_id' => ['required', 'exists:faculties,id'],
             'year' => ['required', 'integer', 'digits:4', 'min:1900', 'max:2050']
@@ -92,6 +93,7 @@ class AuthController extends Controller
 
         // Create student
         $user->student()->create($validated);
+        $user->assignRole('student');
 
         // Log user in
         Auth::login($user);
