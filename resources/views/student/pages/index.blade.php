@@ -2,7 +2,9 @@
 
 @section('content')
     <div class="mx-auto max-w-7xl">
-        @include('student.components.alerts.success')
+        <div class="lg:mx-4">
+            @include('student.components.alerts.success')
+        </div>
         <div class="py-4 sm:py-6 lg:grid lg:grid-cols-12 lg:gap-8">
             <div
                 class="px-4 sm:px-6 sm:text-center md:mx-auto md:max-w-2xl lg:col-span-6 lg:flex lg:items-center lg:text-left">

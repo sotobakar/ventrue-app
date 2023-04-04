@@ -63,8 +63,9 @@ Route::prefix('/mahasiswa')->middleware(['student'])->group(function () {
     Route::post('/acaraku/{event:id}/ingatkan', [StudentEventController::class, 'remind'])->name('student.my_events.remind');
 
     Route::get('/saya', [StudentProfileController::class, 'index'])->name('student.profile');
-    Route::get('/saya/verifikasi', [StudentProfileController::class, 'verifyPage'])->name('student.verify');
-    Route::post('/saya/verifikasi', [StudentProfileController::class, 'verify']);
+
+    // TODO: Update Student Profile Image
+    Route::put('/saya/gambar', [StudentProfileController::class, 'updateImage'])->name('student.profile.update_image');
 });
 
 // Organization Section
