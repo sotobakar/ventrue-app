@@ -53,15 +53,6 @@ class Student extends Model
     }
 
     /**
-     * The verification of the student.
-     * 
-     */
-    public function verification()
-    {
-        return $this->hasOne(StudentVerification::class, 'student_id');
-    }
-
-    /**
      * Check if student attended the event.
      * 
      */
