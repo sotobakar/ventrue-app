@@ -43,6 +43,22 @@ class Event extends Model
     }
 
     /**
+     * Get status of event based on date
+     * 
+     */
+    public static function getStatus($start, $end) {
+        if (Carbon::now()->greaterThan(Carbon::parse($end))) {
+            return config('constants.EVENT.STATUS.2');
+        }
+
+        if (Carbon::now()->greaterThan(Carbon::parse($start))) {
+            return config('constants.EVENT.STATUS.1');
+        }
+
+        return config('constants.EVENT.STATUS.0');
+    }
+
+    /**
      * Check if the event is verified.
      * @return \Illuminate\Database\Eloquent\Casts\Attribute
      */

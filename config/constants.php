@@ -79,6 +79,14 @@ return [
     ],
     'STUDENT' => [],
   ],
+  'STUDENT' => [
+    'PROFILE' => [
+      'IMAGE' => [
+        'WIDTH' => 400,
+        'HEIGHT' => 600,
+      ],
+    ],
+  ],
   'EVENT' => [
     'TYPES' => [
       0 => 'online',
@@ -111,4 +119,3 @@ return [
     ],
   ]
 ];
-?>
