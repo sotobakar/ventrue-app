@@ -191,8 +191,14 @@ Route::prefix('/admin')->group(function () {
         // List Mahasiswa
         Route::get('/mahasiswa', [AdminStudentController::class, 'index'])->name('admin.students');
 
-        // TODO: Detail Mahasiswa
-        Route::get('/mahasiswa/{student}', [AdminStudentController::class, 'show'])->name('admin.students.detail');
+        // Form Edit Mahasiswa
+        Route::get('/mahasiswa/{student}/edit', [AdminStudentController::class, 'edit'])->name('admin.students.edit');
+
+        // Update Mahasiswa
+        Route::put('/mahasiswa/{student}', [AdminStudentController::class, 'update'])->name('admin.students.update');
+
+        // Hapus Mahasiswa
+        Route::delete('/mahasiswa/{student}', [AdminStudentController::class, 'delete'])->name('admin.students.delete');
 
         // TODO: List Acara
 
