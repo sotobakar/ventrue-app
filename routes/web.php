@@ -200,10 +200,6 @@ Route::prefix('/admin')->group(function () {
         // Hapus Mahasiswa
         Route::delete('/mahasiswa/{student}', [AdminStudentController::class, 'delete'])->name('admin.students.delete');
 
-        // TODO: List Acara
-
-        // TODO: Detail Acara
-
         Route::prefix('/acara')->group(function () {
             // List Acara
             Route::get('/', [AdminEventController::class, 'index'])->name('admin.events');
