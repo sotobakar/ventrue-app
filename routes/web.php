@@ -37,6 +37,12 @@ Route::middleware(['not_student'])->group(function () {
     Route::get('/login', [StudentAuthController::class, 'loginPage'])->name('student.login');
     Route::post('/login', [StudentAuthController::class, 'login']);
 
+    // OAuth2 Sign-in Redirect
+    Route::get('/auth/{provider}/redirect', [StudentAuthController::class, 'redirect'])->name('student.login.oauth.redirect');
+
+    // OAuth2 Callback
+    Route::get('/auth/{provider}/callback', [StudentAuthController::class, 'callback'])->name('student.login.oauth.callback');
+
     Route::get('/logout', [StudentAuthController::class, 'logout'])->name('student.logout');
 
     Route::get('/register', [StudentAuthController::class, 'registerPage'])->name('student.register');

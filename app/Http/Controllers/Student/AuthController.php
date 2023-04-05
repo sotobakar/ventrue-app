@@ -4,10 +4,13 @@ namespace App\Http\Controllers\Student;
 
 use App\Http\Controllers\Controller;
 use App\Models\Faculty;
+use App\Models\Student;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Laravel\Socialite\Facades\Socialite;
 
 class AuthController extends Controller
 {
@@ -49,9 +52,9 @@ class AuthController extends Controller
     public function logout(Request $request)
     {
         Auth::logout();
- 
+
         $request->session()->invalidate();
-     
+
         $request->session()->regenerateToken();
 
         return redirect()->route('student.home');
@@ -100,5 +103,36 @@ class AuthController extends Controller
         $request->session()->regenerate();
 
         return redirect()->route('student.home')->with('success', 'Pendaftaran Anda berhasil. Selamat menggunakan fitur-fitur di VENTRUE.');
+    }
+
+    /**
+     * Redirect to OAuth2 Provider Authorization page
+     * 
+     */
+    public function redirect(Request $request, $provider)
+    {
+        return Socialite::driver($provider)->redirect();
+    }
+
+    /**
+     * Callback method from OAuth2 Provider
+     * 
+     */
+    public function callback(Request $request, $provider)
+    {
+        $user = Socialite::driver($provider)->user();
+
+        // Check if student exists, if not then redirect back to login page with error.
+        $student = Student::whereHas('user', function (Builder $query) use ($user) {
+            $query->where('email', $user->email);
+        })->first();
+
+        if (is_null($student)) {
+            return redirect()->route('student.login')->withErrors(['Email anda belum terdaftar. Silahkan registrasi mahasiswa terlebih dahulu.']);
+        }
+
+        Auth::login($student->user);
+
+        return redirect()->route('student.home');
     }
 }

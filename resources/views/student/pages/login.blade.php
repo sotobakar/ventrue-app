@@ -14,10 +14,10 @@
                         <p class="text-sm font-medium text-gray-700">Masuk dengan</p>
 
                         <div class="mt-4">
-                            <a href="#"
+                            <a href="{{ route('student.login.oauth.redirect', ['provider' => 'google']) }}"
                                 class="inline-flex w-full justify-center rounded-md border border-gray-300 bg-white py-2 px-4 text-sm font-medium text-gray-500 shadow-sm hover:bg-gray-50">
                                 <span class="sr-only">Masuk dengan</span>
-                                <i class="fab fa-google text-lg"></i>
+                                <img class="w-5 h-auto" src="{{ asset('img/icons/google.png') }}" alt="Google">
                             </a>
                         </div>
                     </div>
