@@ -119,6 +119,12 @@ Route::prefix('/ormawa')->group(function () {
             // Download attendees data to CSV
             Route::get('/{event:id}/attendees/csv', [OrganizationEventController::class, 'attendees_to_csv'])->name('organization.events.attendees.csv');
 
+            // Download participants data to PDF
+            Route::get('/{event:id}/participants/pdf', [OrganizationEventController::class, 'participants_to_pdf'])->name('organization.events.participants.pdf');
+
+            // Download attendees data to PDF
+            Route::get('/{event:id}/attendees/pdf', [OrganizationEventController::class, 'attendees_to_pdf'])->name('organization.events.attendees.pdf');
+
             // Download feedbacks data to CSV
             Route::get('/{event:id}/feedbacks/csv', [OrganizationEventController::class, 'feedbacks_to_csv'])->name('organization.events.feedbacks.csv');
 
