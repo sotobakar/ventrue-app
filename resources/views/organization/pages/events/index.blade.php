@@ -18,7 +18,10 @@
                             <thead class="bg-gray-50">
                                 <tr>
                                     <th scope="col"
-                                        class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6">Name
+                                        class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6">ID
+                                    </th>
+                                    <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+                                        Nama
                                     </th>
                                     <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
                                         Waktu
@@ -49,8 +52,11 @@
                                 @foreach ($events as $event)
                                     <tr x-data="{ showModal: false }">
                                         <td
-                                            class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
-                                            {{ $event->name }}</td>
+                                            class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-pink-600 sm:pl-6">
+                                            {{ $event->id }}</td>
+                                        <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                                            {{ $event->name }}
+                                        </td>
                                         <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                                             {{ \Carbon\Carbon::parse($event->start)->translatedFormat('l, j F Y H:i') }}
                                         </td>
