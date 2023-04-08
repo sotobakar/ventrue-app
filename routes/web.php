@@ -111,7 +111,7 @@ Route::prefix('/ormawa')->group(function () {
             Route::put('/{event:id}', [OrganizationEventController::class, 'update'])->name('organization.events.update');
 
             // Delete Event
-            Route::get('/{event:id}/delete', [OrganizationEventController::class, 'delete'])->name('organization.events.delete');
+            Route::delete('/{event:id}', [OrganizationEventController::class, 'delete'])->name('organization.events.delete');
 
             // Download participants data to CSV
             Route::get('/{event:id}/participants/csv', [OrganizationEventController::class, 'participants_to_csv'])->name('organization.events.participants.csv');
