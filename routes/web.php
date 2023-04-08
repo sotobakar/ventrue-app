@@ -177,7 +177,7 @@ Route::prefix('/admin')->group(function () {
     Route::get('/logout', [AdminAuthController::class, 'logout'])->name('admin.logout');
 
     Route::middleware(['admin'])->group(function () {
-        // Dashboard TODO: Statistik
+        // Dashboard
         Route::get('/', [AdminDashboardController::class, 'index'])->name('admin.dashboard');
 
         // List Ormawa
