@@ -11,6 +11,7 @@ use App\Models\Event;
 use App\Models\EventCategory;
 use App\Models\EventMaterial;
 use App\Services\ImageService;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -167,12 +168,40 @@ class EventController extends Controller
     }
 
     /**
+     * Download participants of event to PDF.
+     * 
+     */
+    public function participants_to_pdf(Request $request, Event $event)
+    {
+        $pdf = Pdf::loadView('organization.report.event_participants', [
+            'event' => $event,
+            'students' => $event->participants
+        ])->setPaper('a4');
+
+        return $pdf->download('Peserta ' . $event->name . '-' . date('Ymdhis') . '.pdf');
+    }
+
+    /**
      * Download attendees of event to CSV
      * 
      */
     public function attendees_to_csv(Request $request, Event $event)
     {
         return (new EventAttendeesExport($event->attendees))->download('Absensi ' . $event->name . '-' . date("Ymdhis") . ".csv", \Maatwebsite\Excel\Excel::CSV);
+    }
+
+    /**
+     * Download attendees of event to PDF.
+     * 
+     */
+    public function attendees_to_pdf(Request $request, Event $event)
+    {
+        $pdf = Pdf::loadView('organization.report.event_attendees', [
+            'event' => $event,
+            'students' => $event->attendees
+        ])->setPaper('a4');
+
+        return $pdf->download('Absensi ' . $event->name . '-' . date('Ymdhis') . '.pdf');
     }
 
     /**
