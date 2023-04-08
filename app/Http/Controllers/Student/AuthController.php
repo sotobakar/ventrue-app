@@ -37,7 +37,7 @@ class AuthController extends Controller
         if (Auth::attempt($validated)) {
             $request->session()->regenerate();
 
-            return redirect()->route('student.home');
+            return redirect()->intended('/');
         };
 
         return back()->withErrors([
@@ -133,6 +133,6 @@ class AuthController extends Controller
 
         Auth::login($student->user);
 
-        return redirect()->route('student.home');
+        return redirect()->intended('/');
     }
 }
