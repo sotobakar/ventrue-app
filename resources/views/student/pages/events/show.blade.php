@@ -78,15 +78,15 @@
             @else
                 <h3 class="text-green-800">Anda sudah terdaftar di acara ini.</h3>
             @endif
-            <div class="mt-4 flex">
-                @if (!$studentRegistered)
+            <div class="flex">
+                @if (Auth::user() && !$studentRegistered)
                     <form id="register_event" action="{{ route('student.events.register', ['event' => $event->id]) }}"
                         method="POST" class="hidden">
                         @csrf
                         @method('POST')
                     </form>
                     <button type="submit" form="register_event"
-                        class="mr-4 inline-flex items-center rounded-md border border-transparent bg-pink-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-pink-700 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-2">
+                        class="mt-4 mr-4 inline-flex items-center rounded-md border border-transparent bg-pink-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-pink-700 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-2">
                         Daftar
                     </button>
                 @endif
