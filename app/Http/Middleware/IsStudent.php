@@ -22,7 +22,7 @@ class IsStudent extends Middleware
         $this->authenticate($request, $guards);
 
         if (!$request->user()->hasRole('student')) {
-            return redirect()->route('student.login')->withErrors(['Anda tidak memiliki hak akses']);
+            return redirect()->route('student.login');
         }
 
         return $next($request);

@@ -7,6 +7,7 @@
                 @include('student.components.alerts.success')
             </div>
         @endif
+        @include('student.components.alerts.errors')
         <div class="grid grid-cols-3 gap-x-8">
             <div class="col-span-3 md:col-span-2">
                 <div class="relative">
