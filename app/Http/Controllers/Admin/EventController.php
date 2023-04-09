@@ -27,7 +27,7 @@ class EventController extends Controller
                 AllowedFilter::scope('to')
             ])
             ->orderBy('start', 'asc')
-            ->paginate()
+            ->paginate(10)
             ->appends(request()->query());
 
         return view('admin.pages.events.index', [

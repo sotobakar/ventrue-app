@@ -62,6 +62,7 @@ class OrganizationController extends Controller
             'email' => $validated['email'],
             'password' => Hash::make($validated['password'])
         ]);
+        $user->assignRole('organization');
 
         // Save Image
         $imagePath = $this->imageService->storeAndReplace($validated['image'], 400, 400, 'organizations/images');
