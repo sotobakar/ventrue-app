@@ -77,7 +77,7 @@ class DashboardController extends Controller
 
         $attendeesToRegistrationsPercentage = round(($totalAttendances / $totalRegistrations) * 100, 2);
 
-        $averageParticipantsPerEvent = $totalEvents != 0 ? $totalRegistrations / $totalEvents : $totalEvents;
+        $averageParticipantsPerEvent = $totalEvents != 0 ? round($totalRegistrations / $totalEvents, 2) : $totalEvents;
 
         $statistics = [
             [
