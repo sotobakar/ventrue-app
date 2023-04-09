@@ -146,6 +146,25 @@ class EventController extends Controller
     }
 
     /**
+     * Attend event via QR Code
+     * 
+     */
+    public function attendWithQRCode(Request $request, Event $event)
+    {
+        $isRegistered = $event->participants()->wherePivot('student_id', $request->user()->student->id)->exists();
+
+        if (!$isRegistered) {
+            return redirect()->route('student.events.detail', ['event' => $event->id])->withErrors(['Anda belum terdaftar sebagai partisipan acara.']);
+        }
+
+        // Add attendance to student
+        $event->attendees()->syncWithoutDetaching([$request->user()->student->id]);
+
+        // Redirect to events page with success response
+        return redirect()->route('student.my_events.detail', ['event' => $event->id])->with('success', 'Anda berhasil absen untuk acara ' . $event->name . '.');
+    }
+
+    /**
      * Submit feedback
      * 
      */

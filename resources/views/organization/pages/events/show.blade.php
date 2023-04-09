@@ -129,7 +129,7 @@
                                 class="fas fa-print mr-2"></i>Download (.PDF)</a>
                     </div>
                 </div>
-                <div x-show="tab === 'absensi'" x-cloak>
+                <div x-data="{ showModal: false }" x-show="tab === 'absensi'" x-cloak>
                     <div class="flex gap-x-6">
                         <div>
                             <h2 class="text-pink-500 text-3xl">{{ $event->attendees()->count() }}</h2>
@@ -165,6 +165,9 @@
                             <button form="close_attendance" type="submit"
                                 class="inline-flex items-center rounded-md border border-transparent bg-red-600 px-3 py-2 text-sm font-medium leading-4 text-white shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"><i
                                     class="fas fa-lock mr-2"></i>Tutup Absensi</button>
+                            <button @click="showModal = true" type="button"
+                                class="inline-flex items-center rounded-md border border-transparent bg-pink-600 px-3 py-2 text-sm font-medium leading-4 text-white shadow-sm hover:bg-pink-700 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-2"><i
+                                    class="fas fa-qrcode mr-2"></i>Kode QR Absen</button>
                         @endif
                         <a href="{{ route('organization.events.attendees.csv', ['event' => $event->id]) }}"
                             class="inline-flex items-center rounded-md border border-transparent bg-green-600 px-3 py-2 text-sm font-medium leading-4 text-white shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"><i
@@ -172,6 +175,36 @@
                         <a href="{{ route('organization.events.attendees.pdf', ['event' => $event->id]) }}"
                             class="inline-flex items-center rounded-md border border-transparent bg-red-600 px-3 py-2 text-sm font-medium leading-4 text-white shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"><i
                                 class="fas fa-print mr-2"></i>Download (.PDF)</a>
+                    </div>
+                    <div x-show="showModal" class="relative z-10" aria-labelledby="modal-title" role="dialog"
+                        aria-modal="true">
+                        <div x-show="showModal" x-transition:enter="ease-out duration-300"
+                            x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
+                            x-transition:leave="ease-in duration-200" x-transition:leave-start="opacity-100"
+                            x-transition:leave-end="opacity-0"
+                            class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
+
+                        <div class="fixed inset-0 z-10 overflow-y-auto">
+                            <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+                                <div x-show="showModal" x-transition:enter="ease-out duration-300"
+                                    x-transition:enter-start="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                                    x-transition:enter-end="opacity-100 translate-y-0 sm:scale-100"
+                                    x-transition:leave="ease-in duration-200"
+                                    x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100"
+                                    x-transition:leave-end="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                                    @click.outside="showModal = false"
+                                    class="relative transform overflow-hidden rounded-lg bg-white px-4 pt-5 pb-4 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-sm sm:p-6">
+                                    <div>
+                                        <h2 class="text-center text-xl font-bold">QR Code Absensi</h2>
+                                        <div class="mt-5 flex justify-center" id="qrcode"></div>
+                                        <div class="mt-5 sm:mt-6 text-center">
+                                            <a id="qrdl"
+                                                class="inline-block rounded-md border border-transparent bg-pink-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-pink-700 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-2 sm:text-sm">Unduh</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div x-show="tab === 'masukan'" x-cloak>
@@ -351,3 +384,18 @@
         </div>
     </section>
 @endsection
+
+@push('scripts')
+    <script type="text/javascript">
+        const url = '{{ route('student.my_events.attend.qr', ['event' => $event->id]) }}';
+        new QRCode(document.getElementById("qrcode"), url);
+
+        setTimeout(() => {
+            let qelem = document.querySelector('#qrcode img')
+            let dlink = document.querySelector('#qrdl')
+            let qr = qelem.getAttribute('src');
+            dlink.setAttribute('href', qr);
+            dlink.setAttribute('download', 'filename');
+        }, 500);
+    </script>
+@endpush

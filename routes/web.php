@@ -64,13 +64,14 @@ Route::prefix('/mahasiswa')->middleware(['student'])->group(function () {
 
     Route::post('/acaraku/{event:id}/absensi', [StudentEventController::class, 'attend'])->name('student.my_events.attend');
 
+    Route::get('/acaraku/{event:id}/absensi/qr', [StudentEventController::class, 'attendWithQRCode'])->name('student.my_events.attend.qr');
+
     Route::post('/acaraku/{event:id}/feedback', [StudentEventController::class, 'submit_feedback'])->name('student.my_events.feedback');
 
     Route::post('/acaraku/{event:id}/ingatkan', [StudentEventController::class, 'remind'])->name('student.my_events.remind');
 
     Route::get('/saya', [StudentProfileController::class, 'index'])->name('student.profile');
 
-    // TODO: Update Student Profile Image
     Route::put('/saya/gambar', [StudentProfileController::class, 'updateImage'])->name('student.profile.update_image');
 });
 
