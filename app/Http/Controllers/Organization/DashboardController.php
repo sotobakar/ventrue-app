@@ -42,13 +42,15 @@ class DashboardController extends Controller
             ->whereIn('event_id', $event_ids)
             ->count();
 
-        $attendeesToRegistrationsPercentage = ($totalAttendances / $totalRegistrations) * 100;
+        $attendeesToRegistrationsPercentage = round(($totalAttendances / $totalRegistrations) * 100, 2);
 
         $averageFeedbackRatings = DB::table('event_feedback')
             ->whereIn('event_id', $event_ids)
             ->avg('rating');
+        
+        $averageFeedbackRatings = round($averageFeedbackRatings, 1);
 
-        $averageParticipantsPerEvent = $totalEvents != 0 ? $totalRegistrations / $totalEvents : $totalEvents;
+        $averageParticipantsPerEvent = $totalEvents != 0 ? round($totalRegistrations / $totalEvents, 2) : $totalEvents;
 
         $statistics = [
             [
@@ -75,7 +77,7 @@ class DashboardController extends Controller
             [
                 'name' => 'Rata-rata nilai feedback',
                 'icon' => 'fa-stars',
-                'value' => $averageFeedbackRatings ?? 0 . ' / 5 bintang',
+                'value' => $averageFeedbackRatings . ' / 5 bintang',
             ],
             [
                 'name' => 'Rata-rata pendaftar per acara',
