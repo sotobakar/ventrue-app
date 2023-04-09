@@ -99,16 +99,20 @@ class ApprovalController extends Controller
         // Generate signed URL to approve route
         $approveLink = URL::temporarySignedRoute('admin.approvals.approve', now()->addDay(), ['approval' => $approval->id]);
 
-        // Check if sent last 24 hours
-        $executed = RateLimiter::attempt(
-            'send-approval-request:' . $approval->event->id,
-            $perHour = 1,
-            function () use ($approver, $approval, $approveLink) {
-                // Send email
-                Mail::to($approver->email)->send(new ApprovalSent($approval->event, $approval, $approver, $approveLink));
-            },
-            3600
-        );
+        try {
+            // Check if sent last 24 hours
+            $executed = RateLimiter::attempt(
+                'send-approval-request:' . $approval->event->id,
+                $perHour = 1,
+                function () use ($approver, $approval, $approveLink) {
+                    // Send email
+                    Mail::to($approver->email)->send(new ApprovalSent($approval->event, $approval, $approver, $approveLink));
+                },
+                3600
+            );
+        } catch (\Throwable $th) {
+            return back()->withErrors(['Email sedang tidak bisa dikirim. Silahkan coba lagi nanti']);
+        }
 
         if (!$executed) {
             return back()->withErrors(['Email hanya bisa dikirim setiap satu jam. Silahkan coba lagi nanti.']);
