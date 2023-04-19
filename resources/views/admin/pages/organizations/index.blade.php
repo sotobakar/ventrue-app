@@ -21,13 +21,13 @@
                                         class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6">Nama
                                     </th>
                                     <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                                        Fakultas
+                                        Email
                                     </th>
                                     <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
                                         Tingkat
                                     </th>
                                     <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                                        Email
+                                        Fakultas
                                     </th>
                                     <th scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-6">
                                         <span class="sr-only">Ubah</span>
@@ -41,12 +41,12 @@
                                             class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
                                             {{ $organization->name }}</td>
                                         <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                                            {{ $organization->faculty->name ?? '-' }}</td>
+                                            {{ $organization->user->email }}
+                                        </td>
                                         <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                                             {{ $organization->level }}</td>
                                         <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                                            {{ $organization->user->email }}
-                                        </td>
+                                            {{ $organization->faculty->name ?? '-' }}</td>
                                         <td
                                             class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
                                             <a href="{{ route('admin.organizations.edit', ['organization' => $organization->id]) }}"
@@ -54,8 +54,8 @@
                                         </td>
                                         <td
                                             class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
-                                            <div x-show="showModal" x-cloak class="relative z-10" aria-labelledby="modal-title"
-                                                role="dialog" aria-modal="true">
+                                            <div x-show="showModal" x-cloak class="relative z-10"
+                                                aria-labelledby="modal-title" role="dialog" aria-modal="true">
                                                 <div x-show="showModal" x-transition:enter="ease-out duration-300"
                                                     x-transition:enter-start="opacity-0"
                                                     x-transition:enter-end="opacity-100"
@@ -95,11 +95,15 @@
                                                                 </div>
                                                             </div>
                                                             <div class="mt-5 sm:mt-4 sm:flex sm:flex-row-reverse">
-                                                                <form id="{{ 'delete-' . $organization->id}}" action="{{ route('admin.organizations.delete', ['organization' => $organization->id]) }}" method="POST">
-                                                                @csrf
-                                                                @method('DELETE')
+                                                                <form id="{{ 'delete-' . $organization->id }}"
+                                                                    action="{{ route('admin.organizations.delete', ['organization' => $organization->id]) }}"
+                                                                    method="POST">
+                                                                    @csrf
+                                                                    @method('DELETE')
                                                                 </form>
-                                                                <button @click="showModal= false" form="{{ 'delete-' . $organization->id}}" type="submit"
+                                                                <button @click="showModal= false"
+                                                                    form="{{ 'delete-' . $organization->id }}"
+                                                                    type="submit"
                                                                     class="inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto">Hapus</button>
                                                                 <button @click="showModal = false" type="button"
                                                                     class="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto">Cancel</button>
