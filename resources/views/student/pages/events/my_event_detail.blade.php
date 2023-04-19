@@ -226,10 +226,14 @@
                 <h2 class="font-medium text-2xl">Sertifikat Acara</h2>
                 @if (request()->user()->student->didSubmitFeedback($event))
                     <div class="mt-2">
-                        <a href="{{ $event->certificate_link }}"
-                            class="inline-flex items-center rounded-md border border-transparent bg-pink-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-pink-700 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-2">
-                            Unduh Sertifikat
-                        </a>
+                        @if ($event->certificate_link)
+                            <a href="{{ $event->certificate_link }}"
+                                class="inline-flex items-center rounded-md border border-transparent px-4 py-2 text-base font-medium text-white shadow-sm bg-pink-600 hover:bg-pink-700 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-2">
+                                Unduh Sertifikat
+                            </a>
+                        @else
+                            <h2 class="text-red-500">Link sertifikat belum disediakan panitia.</h2>
+                        @endif
                     </div>
                 @else
                     <h2 class="text-red-500">Anda belum mengisi feedback acara.</h2>

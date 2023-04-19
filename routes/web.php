@@ -152,19 +152,14 @@ Route::prefix('/ormawa')->group(function () {
         });
 
         Route::prefix('/persetujuan')->group(function () {
-            // TODO: List approval request
             Route::get('/', [OrganizationApprovalController::class, 'index'])->name('organization.approvals');
 
-            // TODO: Create approval request page
             Route::get('/buat', [OrganizationApprovalController::class, 'create'])->name('organization.approvals.create');
 
-            // TODO: Create approval request
             Route::post('/', [OrganizationApprovalController::class, 'store']);
 
-            // TODO: Approval request detail
             Route::get('/{approval}', [OrganizationApprovalController::class, 'show'])->name('organization.approvals.detail');
 
-            // TODO: Send approval request to approver
             Route::post('/{approval}/send', [OrganizationApprovalController::class, 'send'])->name('organization.approvals.send');
         });
     });

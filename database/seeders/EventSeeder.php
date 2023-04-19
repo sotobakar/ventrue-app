@@ -52,6 +52,28 @@ class EventSeeder extends Seeder
                 ],
                 'organization' => 'English of Siloence',
                 'event_category' => 'Akademik'
+            ],
+            [
+                'data' => [
+                    'name' => 'Basket Malam',
+                    'location' => 'Lapangan Basket UPNVJ Pondok Labu',
+                    'type' => 'offline',
+                    'banner' => 'events/images/basketball.jpg',
+                    'description' => 'Mari basket bersama dengan Basket UPNVJ. Terbuka untuk seluruh mahasiswa UPN.'
+                ],
+                'organization' => 'Basket Veteran Jakarta',
+                'event_category' => 'Hiburan'
+            ],
+            [
+                'data' => [
+                    'name' => 'Pameran (Science Fair) Fakultas Teknik UPNVJ',
+                    'location' => 'Parkiran Kampus Limo',
+                    'type' => 'offline',
+                    'banner' => 'events/images/science.jpg',
+                    'description' => 'Bagi kalian yang penasaran apa saja kegiatan-kegiatan dan organisasi yang ada di Fakultas Teknik UPN Veteran Jakarta.'
+                ],
+                'organization' => 'BEM FIKES',
+                'event_category' => 'Hiburan'
             ]
         ];
 
@@ -60,12 +82,12 @@ class EventSeeder extends Seeder
 
             $event['data']['organization_id'] = Organization::where('name', $event['organization'])->first()->id;
 
-            for ($i = 1; $i < 5; $i++) {
+            for ($i = -1; $i < 4; $i++) {
                 Event::create(array_merge($event['data'], [
-                    'registration_start' => Carbon::today()->addWeeks($i - 1),
-                    'registration_end' => Carbon::today()->addWeeks($i - 1)->addDays(6),
-                    'start' => Carbon::today()->addWeeks($i)->addHours(7),
-                    'end' => Carbon::today()->addWeeks($i)->addHours(10),
+                    'registration_start' => Carbon::now()->startOfHour()->addWeeks($i - 1),
+                    'registration_end' => Carbon::now()->startOfHour()->addWeeks($i - 1)->addDays(6),
+                    'start' => Carbon::now()->startOfHour()->addWeeks($i),
+                    'end' => Carbon::now()->startOfHour()->addWeeks($i)->addHours(2),
                 ]));
             }
         }

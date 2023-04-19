@@ -20,11 +20,11 @@ class EventRegistrationSeeder extends Seeder
         $events = Event::get();
 
         // Get students
-        $students = Student::limit(4)->get();
+        $students = Student::limit(20)->get();
 
         // Register student to events
         foreach($events as $event) {
-            $event->participants()->syncWithoutDetaching($students);
+            $event->participants()->syncWithoutDetaching($students->random(rand(5, 20)));
         }
     }
 }

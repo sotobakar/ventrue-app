@@ -16,9 +16,9 @@ class HighlightedEventSeeder extends Seeder
      */
     public function run()
     {
-        $event = Event::first();
+        $events = Event::inRandomOrder()->limit(5)->get();
         
-        for ($i=0; $i < 5 ; $i++) { 
+        foreach ($events as $event) { 
             HighlightedEvent::create([
                 'event_id' => $event->id
             ]);
