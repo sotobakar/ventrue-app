@@ -29,6 +29,8 @@ class DatabaseSeeder extends Seeder
             StudentSeeder::class,
             AdminSeeder::class,
             EventRegistrationSeeder::class,
+            EventAttendanceSeeder::class,
+            EventFeedbackSeeder::class,
             EventMaterialSeeder::class,
             HighlightedEventSeeder::class,
             ApproverSeeder::class,

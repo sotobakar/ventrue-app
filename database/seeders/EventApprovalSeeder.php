@@ -17,15 +17,22 @@ class EventApprovalSeeder extends Seeder
     public function run()
     {
         $organization = Organization::where('name', 'KSM Android')->first();
-        $events = Event::where('organization_id', $organization->id)->limit(1)->get();
+        $events = Event::where('organization_id', $organization->id)->get();
 
-        foreach ($events as $event) {
-            $approval = $event->approval()->create([
+        // Verify events
+        foreach ($events->take(2) as $event) {
+            $event->approval()->create([
+                'event_id' => $event->id,
+                'approved_at' => now()
+            ]);
+        }
+
+        // Verify events (not approved)
+        foreach ($events->take(-3) as $event) {
+            $event->approval()->create([
                 'event_id' => $event->id,
                 'approved_at' => null
             ]);
-
-            // Append files to approval
         }
     }
 }

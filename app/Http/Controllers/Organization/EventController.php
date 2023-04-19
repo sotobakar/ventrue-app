@@ -74,7 +74,7 @@ class EventController extends Controller
         $file = $validated['banner'];
         $resized_image = Image::make($file->getPathName())
             ->orientate()
-            ->fit(600, 337.5, function ($constraint) {
+            ->fit(600, 337, function ($constraint) {
                 $constraint->aspectRatio();
             })->encode();
 
@@ -153,6 +153,8 @@ class EventController extends Controller
                 Storage::disk('public')->delete($event->banner);
             }
         }
+
+        // TODO: Delete materials if exist
 
         $event->delete();
         return redirect()->route('organization.events')->with('success', 'Berhasil menghapus event.');
