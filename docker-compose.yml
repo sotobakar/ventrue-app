@@ -1,0 +1,28 @@
+services:
+  web:
+    image: nginx:latest
+    ports:
+      - 8080:80
+    volumes:
+      - app:/var/www
+      - ./docker/nginx/site.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - php
+  php:
+    build: 
+      context: .
+      dockerfile: ./docker/php-fpm/Dockerfile
+    volumes:
+      - app:/var/www
+    expose:
+      - 9000
+    env_file:
+      - .env
+
+volumes:
+  app:
+
+networks:
+  default:
+    name: web
+    external: true
