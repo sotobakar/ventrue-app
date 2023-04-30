@@ -5,12 +5,16 @@ RUN apk add --no-cache \
     nodejs npm \
     libpng-dev \
     libzip-dev \
+    jpeg-dev \
     zip \
     unzip \
     icu-dev \
     oniguruma-dev \
     libxml2-dev \
     openssl-dev
+
+# Configure GD Extensions
+RUN docker-php-ext-configure gd --enable-gd --with-jpeg
 
 # Install PHP extensions
 RUN docker-php-ext-install \
@@ -39,14 +43,14 @@ COPY package.json package-lock.json ./
 RUN npm install
 
 # Install PHP dependencies
-RUN composer install --no-dev --prefer-dist --no-interaction --no-scripts --no-autoloader \
+RUN composer install --prefer-dist --no-interaction --no-scripts --no-autoloader \
     && composer clear-cache \
     && rm -rf /tmp/*
 
 COPY . .
 
 # Generate autoload files
-RUN composer dump-autoload --no-dev --classmap-authoritative
+RUN composer dump-autoload --classmap-authoritative
 
 # Build production assets
 RUN npm run build
@@ -56,6 +60,9 @@ RUN chown -R www-data:www-data /var/www/storage && \
     chown -R www-data:www-data /var/www/bootstrap/cache && \
     chmod -R 775 /var/www/storage && \
     chmod -R 775 /var/www/bootstrap/cache
+
+# Link PHP Storage
+RUN php artisan storage:link
 
 # Expose port 9000 for PHP-FPM
 EXPOSE 9000
