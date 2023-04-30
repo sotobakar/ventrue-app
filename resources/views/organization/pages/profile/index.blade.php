@@ -14,7 +14,7 @@
                 @csrf
                 @method('PUT')
                 <div class="sm:col-span-2">
-                    <img class="block mx-auto rounded-full" style="height: 200px; width: auto;" src="{{ $user->organization->image ? asset('storage/' . $user->organization->image) : asset('img/placeholder.png') }}" alt="Gambar tidak ada">
+                    <img class="block mx-auto" style="height: 200px; width: auto;" src="{{ $user->organization->image ? asset('storage/' . $user->organization->image) : asset('img/placeholder.png') }}" alt="Gambar tidak ada">
                 </div>
                 <div class="sm:col-span-2">
                     <label for="image" class="block text-sm font-medium text-gray-700">Upload Foto Profil</label>

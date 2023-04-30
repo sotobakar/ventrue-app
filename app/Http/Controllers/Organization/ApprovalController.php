@@ -37,21 +37,13 @@ class ApprovalController extends Controller
      */
     public function create(Request $request)
     {
-        if ($request->has('id')) {
-            $event = Event::where('id', $request->input('id'))
-                ->where('organization_id', $request->user()->organization->id)
-                ->first();
+        $events = $request->user()->organization->events()->orderBy('start', 'desc')->get()->filter(function ($event) {
+            return !$event->approval;
+        });
 
-            if ($event) {
-                return view('organization.pages.approvals.create', [
-                    'event' => $event
-                ]);
-            } else {
-                return redirect()->route('organization.approvals.create')->withErrors(['Acara tidak ditemukan']);
-            }
-        }
-
-        return view('organization.pages.approvals.create');
+        return view('organization.pages.approvals.create', [
+            'events' => $events
+        ]);
     }
 
     /**
