@@ -46,7 +46,8 @@ class Event extends Model
      * Get status of event based on date
      * 
      */
-    public static function getStatus($start, $end) {
+    public static function getStatus($start, $end)
+    {
         if (Carbon::now()->greaterThan(Carbon::parse($end))) {
             return config('constants.EVENT.STATUS.2');
         }
@@ -145,6 +146,22 @@ class Event extends Model
     public function approval()
     {
         return $this->hasOne(EventApproval::class, 'event_id');
+    }
+
+    /**
+     * Filter scope for event start datetime
+     * 
+     */
+    public function scopeStatus(Builder $query, $status): Builder
+    {
+        if ($status == config('constants.EVENT.STATUS.2')) {
+            return $query->where('end', '<=', Carbon::parse(now()));
+        } elseif ($status == config('constants.EVENT.STATUS.1')) {
+            return $query->where('start', '<=', Carbon::parse(now()))
+                ->where('end', '>=', Carbon::parse(now()));
+        } else {
+            return $query->where('start', '<=', Carbon::parse(now()));
+        }
     }
 
     /**

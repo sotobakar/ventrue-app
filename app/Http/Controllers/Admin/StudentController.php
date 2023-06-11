@@ -10,6 +10,8 @@ use App\Services\ImageService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
+use Spatie\QueryBuilder\AllowedFilter;
+use Spatie\QueryBuilder\QueryBuilder;
 
 class StudentController extends Controller
 {
@@ -26,7 +28,11 @@ class StudentController extends Controller
      */
     public function index(Request $request)
     {
-        $students = Student::get();
+        $students = QueryBuilder::for(Student::class)
+        ->allowedFilters(['name', AllowedFilter::partial('nim', 'sid')])
+        ->orderBy('sid', 'asc')
+        ->paginate(10)
+        ->appends(request()->query());
 
         return view('admin.pages.students.index', [
             'students' => $students

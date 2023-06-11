@@ -20,7 +20,7 @@
                     <label for="image" class="block text-sm font-medium text-gray-700">Upload Foto Profil</label>
                     <div class="mt-1">
                         <input type="file" name="image" id="image" autocomplete="given-name"
-                            class="block w-full rounded-md border border-gray-300 py-3 px-4 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                            class="block w-full rounded-md border border-gray-300 py-3 px-4 shadow-sm focus:border-pink-500 focus:ring-pink-500">
                     </div>
                 </div>
                 <div class="sm:col-span-2">
@@ -28,14 +28,14 @@
                     <div class="mt-1">
                         <input type="text" name="name" id="name" autocomplete="given-name"
                             value="{{ $user->organization->name }}"
-                            class="block w-full rounded-md border border-gray-300 py-3 px-4 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                            class="block w-full rounded-md border border-gray-300 py-3 px-4 shadow-sm focus:border-pink-500 focus:ring-pink-500">
                     </div>
                 </div>
                 <div class="sm:col-span-2">
                     <label for="level" class="block text-sm font-medium text-gray-700">Tingkat Organisasi</label>
                     <div class="mt-1">
                         <select disabled id="level" name="level"
-                            class="block w-full rounded-md border border-gray-300 py-3 px-4 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                            class="block w-full rounded-md border border-gray-300 py-3 px-4 shadow-sm focus:border-pink-500 focus:ring-pink-500">
                             @foreach($levels as $level)
                             <option {{ $user->organization->level == $level ? 'selected' : '' }}>{{ $level }}</option>
                             @endforeach
@@ -46,7 +46,7 @@
                     <label for="faculty_id" class="block text-sm font-medium text-gray-700">Fakultas</label>
                     <div class="mt-1">
                         <select disabled id="faculty_id" name="faculty_id"
-                            class="block w-full rounded-md border border-gray-300 py-3 px-4 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                            class="block w-full rounded-md border border-gray-300 py-3 px-4 shadow-sm focus:border-pink-500 focus:ring-pink-500">
                             @foreach($faculties as $faculty)
                             <option {{ $user->organization->faculty_id == $faculty->id ? 'selected' : '' }} value="{{ $faculty->id }}">{{ $faculty->name }}</option>
                             @endforeach
@@ -57,12 +57,12 @@
                     <label for="description" class="block text-sm font-medium text-gray-700">Deskripsi</label>
                     <div class="mt-1">
                         <textarea id="description" name="description" rows="4"
-                            class="block w-full rounded-md border border-gray-300 py-3 px-4 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">{{ $user->organization->description }}</textarea>
+                            class="block w-full rounded-md border border-gray-300 py-3 px-4 shadow-sm focus:border-pink-500 focus:ring-pink-500">{{ $user->organization->description }}</textarea>
                     </div>
                 </div>
                 <div class="sm:col-span-2">
                     <button type="submit"
-                        class="inline-flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Ubah</button>
+                        class="inline-flex w-full items-center justify-center rounded-md border border-transparent bg-pink-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-pink-700 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-2">Ubah</button>
                 </div>
             </form>
         </div>

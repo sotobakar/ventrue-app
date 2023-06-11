@@ -20,21 +20,21 @@
                         <div class="mt-1">
                             <input type="file" accept="image/*" @change="fileChosen" name="banner"
                                 id="banner"
-                                class="block w-full rounded-md border border-gray-300 py-3 px-4 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                                class="block w-full rounded-md border border-gray-300 py-3 px-4 shadow-sm focus:border-pink-500 focus:ring-pink-500">
                         </div>
                     </div>
                     <div class="sm:col-span-2">
                         <label for="name" class="block text-sm font-medium text-gray-700">Nama Acara</label>
                         <div class="mt-1">
                             <input type="text" required name="name" id="name" autocomplete="given-name" value="{{ $event->name }}"
-                                class="block w-full rounded-md border border-gray-300 py-3 px-4 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                                class="block w-full rounded-md border border-gray-300 py-3 px-4 shadow-sm focus:border-pink-500 focus:ring-pink-500">
                         </div>
                     </div>
                     <div class="sm:col-span-2">
                         <label for="type" class="block text-sm font-medium text-gray-700">Jenis Acara</label>
                         <div class="mt-1">
                             <select x-model="type" id="type" name="type"
-                                class="block w-full rounded-md border border-gray-300 py-3 px-4 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                                class="block w-full rounded-md border border-gray-300 py-3 px-4 shadow-sm focus:border-pink-500 focus:ring-pink-500">
                                 @foreach ($types as $type)
                                     <option value="{{ $type }}" <?= $event->type == $type ? 'selected' : '' ?> >{{ ucfirst($type) }}</option>
                                 @endforeach
@@ -45,7 +45,7 @@
                         <label for="event_category" class="block text-sm font-medium text-gray-700">Kategori Acara</label>
                         <div class="mt-1">
                             <select id="event_category" name="event_category"
-                                class="block w-full rounded-md border border-gray-300 py-3 px-4 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                                class="block w-full rounded-md border border-gray-300 py-3 px-4 shadow-sm focus:border-pink-500 focus:ring-pink-500">
                                 @foreach ($event_categories as $event_category)
                                     <option value="{{ $event_category->id }}" <?= $event->event_category->id == $event_category->id ? 'selected' : '' ?> >{{ ucfirst($event_category->name) }}</option>
                                 @endforeach
@@ -56,28 +56,28 @@
                         <label for="location" class="block text-sm font-medium text-gray-700">Lokasi</label>
                         <div class="mt-1">
                             <input type="text" required name="location" id="location" autocomplete="location" value="{{ $event->location }}"
-                                class="block w-full rounded-md border border-gray-300 py-3 px-4 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                                class="block w-full rounded-md border border-gray-300 py-3 px-4 shadow-sm focus:border-pink-500 focus:ring-pink-500">
                         </div>
                     </div>
                     <div class="sm:col-span-2" x-show="type != 'offline'">
                         <label for="meeting_link" class="block text-sm font-medium text-gray-700">Meeting Link</label>
                         <div class="mt-1">
                             <input type="text" name="meeting_link" id="meeting_link" value="{{ $event->meeting_link }}"
-                                class="block w-full rounded-md border border-gray-300 py-3 px-4 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                                class="block w-full rounded-md border border-gray-300 py-3 px-4 shadow-sm focus:border-pink-500 focus:ring-pink-500">
                         </div>
                     </div>
                     <div class="sm:col-span-2">
                         <label for="start" class="block text-sm font-medium text-gray-700">Waktu Mulai Acara</label>
                         <div class="mt-1">
                             <input type="datetime-local" required id="start" name="start" value="{{ $event->start }}"
-                                class="block w-full rounded-md border border-gray-300 py-3 px-4 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" />
+                                class="block w-full rounded-md border border-gray-300 py-3 px-4 shadow-sm focus:border-pink-500 focus:ring-pink-500" />
                         </div>
                     </div>
                     <div class="sm:col-span-2">
                         <label for="end" class="block text-sm font-medium text-gray-700">Waktu Selesai Acara</label>
                         <div class="mt-1">
                             <input type="datetime-local" required id="end" name="end" value="{{ $event->end }}"
-                                class="block w-full rounded-md border border-gray-300 py-3 px-4 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" />
+                                class="block w-full rounded-md border border-gray-300 py-3 px-4 shadow-sm focus:border-pink-500 focus:ring-pink-500" />
                         </div>
                     </div>
                     <div class="sm:col-span-2">
@@ -85,7 +85,7 @@
                             Dibuka</label>
                         <div class="mt-1">
                             <input type="datetime-local" required id="registration_start" name="registration_start" value="{{ $event->registration_start }}"
-                                class="block w-full rounded-md border border-gray-300 py-3 px-4 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" />
+                                class="block w-full rounded-md border border-gray-300 py-3 px-4 shadow-sm focus:border-pink-500 focus:ring-pink-500" />
                         </div>
                     </div>
                     <div class="sm:col-span-2">
@@ -93,7 +93,7 @@
                             Ditutup</label>
                         <div class="mt-1">
                             <input type="datetime-local" required id="registration_end" name="registration_end" value="{{ $event->registration_end }}"
-                                class="block w-full rounded-md border border-gray-300 py-3 px-4 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" />
+                                class="block w-full rounded-md border border-gray-300 py-3 px-4 shadow-sm focus:border-pink-500 focus:ring-pink-500" />
                         </div>
                     </div>
 
@@ -102,7 +102,7 @@
                             karakter)</label>
                         <div class="mt-1">
                             <textarea id="description" name="description" rows="4" required minlength="50"
-                                class="block w-full rounded-md border border-gray-300 py-3 px-4 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">{{ $event->description }}</textarea>
+                                class="block w-full rounded-md border border-gray-300 py-3 px-4 shadow-sm focus:border-pink-500 focus:ring-pink-500">{{ $event->description }}</textarea>
                         </div>
                     </div>
                     <div class="sm:col-span-2">

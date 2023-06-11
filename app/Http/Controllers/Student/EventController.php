@@ -40,7 +40,14 @@ class EventController extends Controller
     public function index(Request $request)
     {
         $query = QueryBuilder::for(Event::class)
-            ->allowedFilters(['name', AllowedFilter::exact('event_category', 'event_category_id'), 'type']);
+            ->allowedFilters([
+                'name',
+                AllowedFilter::exact('event_category', 'event_category_id'),
+                'type',
+                // AllowedFilter::scope('status')->default(config('constants.EVENT.STATUS.0')),
+                AllowedFilter::scope('from')->default(now()),
+                AllowedFilter::scope('to')
+            ]);
 
 
         $events = $query->where('start', '>', \Carbon\Carbon::now())

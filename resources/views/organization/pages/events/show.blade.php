@@ -330,7 +330,7 @@
                                                         File</label>
                                                     <div class="mt-1">
                                                         <input type="text" name="name" id="name"
-                                                            class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                                            class="block w-full rounded-md border-gray-300 shadow-sm focus:border-pink-500 focus:ring-pink-500 sm:text-sm"
                                                             placeholder="PPT Materi" required>
                                                     </div>
                                                 </div>
@@ -342,7 +342,7 @@
                                                     </div>
                                                     <div class="mt-1">
                                                         <input type="file" name="material" id="material"
-                                                            class="block w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                                            class="block w-full border-gray-300 focus:border-pink-500 focus:ring-pink-500 sm:text-sm"
                                                             required>
                                                     </div>
                                                 </div>
