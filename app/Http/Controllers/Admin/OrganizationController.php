@@ -12,6 +12,7 @@ use App\Services\ImageService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
+use Spatie\QueryBuilder\QueryBuilder;
 
 class OrganizationController extends Controller
 {
@@ -28,7 +29,12 @@ class OrganizationController extends Controller
      */
     public function index(Request $request)
     {
-        $organizations = Organization::get();
+        $organizations = QueryBuilder::for(Organization::class)
+            ->allowedFilters(['name'])
+            ->orderBy('name', 'asc')
+            ->paginate(10)
+            ->appends(request()->query());
+
         return view('admin.pages.organizations.index', [
             'organizations' => $organizations
         ]);
@@ -85,7 +91,8 @@ class OrganizationController extends Controller
      * Show organization edit form.
      * 
      */
-    public function edit(Organization $organization, Request $request) {
+    public function edit(Organization $organization, Request $request)
+    {
         $levels = config('constants.ORGANIZATION.LEVEL');
         $faculties = Faculty::get();
         return view('admin.pages.organizations.edit', [
@@ -99,7 +106,8 @@ class OrganizationController extends Controller
      * Update organization
      * 
      */
-    public function update(Organization $organization, UpdateOrganizationRequest $request) {
+    public function update(Organization $organization, UpdateOrganizationRequest $request)
+    {
         $validated = $request->validated();
 
         $user = $organization->user;
@@ -137,9 +145,10 @@ class OrganizationController extends Controller
      * Delete organization
      * 
      */
-    public function delete(Organization $organization, Request $request) {
+    public function delete(Organization $organization, Request $request)
+    {
         // Delete profile image if exists
-        if(!is_null($organization->image)) {
+        if (!is_null($organization->image)) {
             if (Storage::disk('public')->exists($organization->image)) {
                 Storage::disk('public')->delete($organization->image);
             }

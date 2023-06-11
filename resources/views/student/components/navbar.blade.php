@@ -59,16 +59,6 @@
                             </div>
                         </a>
 
-                        <a href="#" class="-m-3 flex items-start rounded-lg p-3 hover:bg-gray-100">
-                            <i class="self-center flex-shrink-0 far fa-file-certificate text-pink-600 text-2xl"></i>
-                            <div class="ml-4">
-                                <p class="text-base font-medium text-gray-900">Sertifikat Saya</p>
-                                <p class="mt-1 text-sm text-gray-500">Seluruh sertifikat acara yang diberikan oleh
-                                    Ormawa.
-                                </p>
-                            </div>
-                        </a>
-
                         <a href="{{ route('student.logout') }}"
                             class="-m-3 flex items-start rounded-lg p-3 hover:bg-gray-100">
                             <i class="self-center flex-shrink-0 far fa-sign-out text-pink-600 text-2xl"></i>
@@ -104,7 +94,7 @@
             </div>
             <div class="-mr-2">
                 <button @click="open = !open" type="button"
-                    class="inline-flex items-center justify-center rounded-md bg-white p-2 text-gray-400 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500">
+                    class="inline-flex items-center justify-center rounded-md bg-white p-2 text-gray-400 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-pink-500">
                     <span class="sr-only">Close menu</span>
                     <!-- Heroicon name: outline/x-mark -->
                     <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
@@ -134,11 +124,6 @@
 
                     <a href="{{ route('student.my_events') }}"
                         class="block rounded-md px-3 py-2 text-base font-medium text-gray-700 hover:bg-gray-100 hover:text-gray-900">Acara
-                        Saya</a>
-
-
-                    <a
-                        class="block rounded-md px-3 py-2 text-base font-medium text-gray-700 hover:bg-gray-100 hover:text-gray-900">Sertifikat
                         Saya</a>
 
                     <a href="{{ route('student.logout') }}"
