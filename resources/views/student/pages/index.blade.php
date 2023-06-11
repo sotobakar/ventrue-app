@@ -85,6 +85,7 @@
             autoplay: {
                 delay: 5000,
             },
+            loop: true,
         });
     </script>
 @endpush

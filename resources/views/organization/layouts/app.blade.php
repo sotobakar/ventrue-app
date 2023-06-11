@@ -191,7 +191,7 @@
                     </svg>
                 </button>
             </div>
-            <main class="flex-1">
+            <main class="min-h-screen flex-1">
                 <div class="py-6">
                     <div class="mx-auto max-w-7xl px-4 sm:px-6 md:px-8">
                         <div class="mb-4">

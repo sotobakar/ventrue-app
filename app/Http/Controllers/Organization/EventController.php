@@ -68,7 +68,7 @@ class EventController extends Controller
         ]);
 
         $validated['event_category_id'] = $validated['event_category'];
-        $validated['organization_id'] = $request->user()->id;
+        $validated['organization_id'] = $request->user()->organization->id;
 
         // Store image
         $file = $validated['banner'];

@@ -18,7 +18,7 @@
                             <span class="ml-2 font-medium">Verified</span>
                         </div>
                     @endif
-                    <img class="mt-4 rounded-lg" src="{{ asset('storage/' . $event->banner) }}" alt="Gambar Event">
+                    <img class="mt-4 w-full rounded-lg" src="{{ asset('storage/' . $event->banner) }}" alt="Gambar Event">
                 </div>
                 <h1 class="mt-4 text-4xl font-bold">{{ $event->name }}</h1>
             </div>

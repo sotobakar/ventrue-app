@@ -42,12 +42,12 @@ class DashboardController extends Controller
             ->whereIn('event_id', $event_ids)
             ->count();
 
-        $attendeesToRegistrationsPercentage = round(($totalAttendances / $totalRegistrations) * 100, 2);
+        $attendeesToRegistrationsPercentage = ($totalRegistrations === 0) ? 0 : round(($totalAttendances / $totalRegistrations) * 100, 2);
 
         $averageFeedbackRatings = DB::table('event_feedback')
             ->whereIn('event_id', $event_ids)
             ->avg('rating');
-        
+
         $averageFeedbackRatings = round($averageFeedbackRatings, 1);
 
         $averageParticipantsPerEvent = $totalEvents != 0 ? round($totalRegistrations / $totalEvents, 2) : $totalEvents;

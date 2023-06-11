@@ -44,7 +44,6 @@ class EventController extends Controller
                 'name',
                 AllowedFilter::exact('event_category', 'event_category_id'),
                 'type',
-                // AllowedFilter::scope('status')->default(config('constants.EVENT.STATUS.0')),
                 AllowedFilter::scope('from')->default(now()),
                 AllowedFilter::scope('to')
             ]);
@@ -73,6 +72,10 @@ class EventController extends Controller
         if ($request->user()) {
             // Check if student registered to the event
             $studentRegistered = $event->participants()->where('id', $request->user()->student->id)->exists();
+
+            if ($studentRegistered) { 
+                return redirect()->route('student.my_events.detail', ['event' => $event]);
+            }
         }
 
         return view('student.pages.events.show', [
@@ -118,7 +121,7 @@ class EventController extends Controller
      */
     public function my_events(Request $request)
     {
-        $events = $request->user()->student->registered_events()->paginate(6);
+        $events = $request->user()->student->registered_events()->orderBy('registered_at', 'desc')->paginate(6);
 
         return view('student.pages.events.my_events', [
             'events' => $events
@@ -149,7 +152,7 @@ class EventController extends Controller
     public function attend(Request $request, Event $event)
     {
         $event->attendees()->syncWithoutDetaching([$request->user()->student->id]);
-        return back();
+        return back()->with('success', 'Anda berhasil absen untuk acara ' . $event->name . '.');
     }
 
     /**
@@ -188,6 +191,6 @@ class EventController extends Controller
 
         $feedback->save();
 
-        return back();
+        return back()->with('success', 'Terimakasih sudah mengisi feedback.');
     }
 }

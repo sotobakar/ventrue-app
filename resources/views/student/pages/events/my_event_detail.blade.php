@@ -9,7 +9,7 @@
         @endif
         <div class="grid grid-cols-3 gap-x-8">
             <div class="col-span-3 md:col-span-2">
-                <img class="mt-4 rounded-lg" src="{{ asset('storage/' . $event->banner) }}" alt="Gambar Event">
+                <img class="mt-4 w-full rounded-lg" src="{{ asset('storage/' . $event->banner) }}" alt="Gambar Event">
                 <h1 class="mt-4 text-4xl font-bold">{{ $event->name }}</h1>
             </div>
             <div class="col-span-3 md:col-span-1">
@@ -197,7 +197,7 @@
                         <div>
                             <label for="rating" class="block text-sm font-medium text-gray-700">Nilai Acara</label>
                             <select id="rating" name="rating"
-                                class="mt-1 block w-full rounded-md border-gray-300 py-2 pl-3 pr-10 text-base focus:border-pink-500 focus:outline-none focus:ring-pink-500 sm:text-sm">
+                                class="mt-1 block w-full rounded-md border-gray-300 py-2 pl-3 pr-10 text-base focus:border-pink-500 focus:outline-none focus:ring-pink-500 sm:text-sm" required>
                                 <option selected>5</option>
                                 <option>4</option>
                                 <option>3</option>
@@ -209,7 +209,7 @@
                             <label for="body" class="block text-sm font-medium text-gray-700">Masukan tentang
                                 acara</label>
                             <div class="mt-1">
-                                <textarea rows="4" name="body" id="body"
+                                <textarea rows="4" name="body" id="body" required
                                     class="block w-full rounded-md border-gray-300 shadow-sm focus:border-pink-500 focus:ring-pink-500 sm:text-sm"></textarea>
                             </div>
                         </div>

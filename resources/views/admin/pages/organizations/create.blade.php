@@ -8,7 +8,7 @@
         <div x-data="imageViewer()" class="sm:col-span-2">
             <!-- Show the image -->
             <template x-if="imageUrl">
-                <img :src="imageUrl" class="mb-2 mx-auto object-cover rounded border border-gray-200"
+                <img :src="imageUrl" class="mb-2 mx-auto object-contain rounded"
                     style="width: 500px; height: 281px;">
             </template>
             <label for="image" class="block text-sm font-medium text-gray-700">Upload Foto Organisasi</label>
