@@ -20,7 +20,7 @@ rm -rf ${DEST_DIR}/*
 # Copy all files from the source directory to the destination directory
 cp -r ${SOURCE_DIR}/* ${DEST_DIR}/
 
-sudo chmod -R 777 storage/app/public/
+chmod -R 777 storage/app/public/
 
 # Print a message indicating that the operation has completed successfully
 echo "All files from directory D have been removed and replaced with files from ${SOURCE_DIR}."

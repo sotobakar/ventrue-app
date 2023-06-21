@@ -2,8 +2,7 @@ services:
   web:
     image: nginx:latest
     volumes:
-      - app:/var/www
-      - storage:/var/www/storage
+      - ./:/var/www
       - ./docker/nginx/site.conf:/etc/nginx/conf.d/default.conf
     networks:
       - default
@@ -18,27 +17,21 @@ services:
       context: .
       dockerfile: ./docker/php-fpm/Dockerfile
     volumes:
-      - app:/var/www
-      - storage:/var/www/storage
+      - ./:/var/www
     networks:
       - default
       - database
     env_file:
       - .env
-  mailhog:
-    image: mailhog/mailhog:latest
-    networks:
-      - default
-      - web
-    environment:
-      - VIRTUAL_HOST=mailhog.patricksantino.com
-      - VIRTUAL_PORT=8025
-      - LETSENCRYPT_HOST=mailhog.patricksantino.com
-
-
-volumes:
-  app:
-  storage:
+#  mailhog:
+#    image: mailhog/mailhog:latest
+#    networks:
+#      - default
+#      - web
+#    environment:
+#      - VIRTUAL_HOST=mailhog.patricksantino.com
+#      - VIRTUAL_PORT=8025
+#      - LETSENCRYPT_HOST=mailhog.patricksantino.com
 
 networks:
   default:
