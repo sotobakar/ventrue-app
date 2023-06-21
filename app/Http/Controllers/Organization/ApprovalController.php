@@ -120,7 +120,7 @@ class ApprovalController extends Controller
      */
     public function show(ShowApprovalRequest $request, EventApproval $approval)
     {
-        $approver = Approver::where('faculty_id', $approval->event->faculty_id)->first();
+        $approver = Approver::where('faculty_id', $approval->event->organization->faculty_id)->first();
 
         return view('organization.pages.approvals.show', [
             'approval' => $approval,
