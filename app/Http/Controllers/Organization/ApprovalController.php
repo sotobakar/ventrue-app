@@ -86,7 +86,7 @@ class ApprovalController extends Controller
      */
     public function send(SendApprovalRequest $request, EventApproval $approval)
     {
-        $approver = Approver::where('faculty_id', $approval->event->faculty_id)->first();
+        $approver = Approver::where('faculty_id', $approval->event->organization->faculty_id)->first();
 
         // Generate signed URL to approve route
         $approveLink = URL::temporarySignedRoute('admin.approvals.approve', now()->addDay(), ['approval' => $approval->id]);
