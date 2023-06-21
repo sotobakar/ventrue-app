@@ -5,10 +5,6 @@
 <div class="overflow-hidden px-4 sm:px-6 lg:px-8">
     <div class="relative mx-auto max-w-xl">
         <div class="mt-12">
-            <div class="mb-4">
-                @include('organization.components.alerts.success')
-                @include('organization.components.alerts.errors', ['activity' => 'update profile'])
-            </div>
             <form action="{{ route('organization.profile') }}" method="POST" class="grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-8"
                 enctype="multipart/form-data">
                 @csrf

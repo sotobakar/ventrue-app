@@ -72,7 +72,7 @@ class EventSeeder extends Seeder
                     'banner' => 'events/images/science.jpg',
                     'description' => 'Bagi kalian yang penasaran apa saja kegiatan-kegiatan dan organisasi yang ada di Fakultas Teknik UPN Veteran Jakarta.'
                 ],
-                'organization' => 'BEM FIKES',
+                'organization' => 'Himpunan Mahasiswa Teknik Mesin',
                 'event_category' => 'Hiburan'
             ]
         ];
