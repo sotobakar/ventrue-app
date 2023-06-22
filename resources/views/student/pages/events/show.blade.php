@@ -75,11 +75,22 @@
                     <span
                         class="self-start inline-flex items-center rounded-full bg-green-100 px-2.5 py-0.5 text-sm font-medium text-green-800">Pendaftaran
                         Masih Dibuka!</span>
+                    <div class="flex">
+                        <form id="register_event" action="{{ route('student.events.register', ['event' => $event->id]) }}"
+                            method="POST" class="hidden">
+                            @csrf
+                            @method('POST')
+                        </form>
+                        <button type="submit" form="register_event"
+                            class="mt-4 mr-4 inline-flex items-center rounded-md border border-transparent bg-pink-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-pink-700 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-2">
+                            Daftar
+                        </button>
+                    </div>
                 @endif
             @else
                 <h3 class="text-green-800">Anda sudah terdaftar di acara ini.</h3>
             @endif
-            <div class="flex">
+            {{-- <div class="flex">
                 <form id="register_event" action="{{ route('student.events.register', ['event' => $event->id]) }}"
                     method="POST" class="hidden">
                     @csrf
@@ -89,7 +100,7 @@
                     class="mt-4 mr-4 inline-flex items-center rounded-md border border-transparent bg-pink-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-pink-700 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-2">
                     Daftar
                 </button>
-            </div>
+            </div> --}}
         </div>
     </div>
 @endsection

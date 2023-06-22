@@ -124,7 +124,7 @@ class OrganizationSeeder extends Seeder
             ],
             [
                 'email' => 'hmtm@upnvj.ac.id',
-                'name' => 'Himpunan Mahasiswa Teknik Mesin',
+                'name' => 'HIMA Mesin',
                 'level' => 'Fakultas',
                 'faculty' => 'FT',
                 'image' => 'organizations/images/hm_teknik_mesin.png' 
