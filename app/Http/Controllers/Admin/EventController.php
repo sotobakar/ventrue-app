@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Event\UpdateEventRequest;
 use App\Models\Event;
 use App\Models\EventCategory;
+use App\Models\Location;
 use App\Services\ImageService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -62,10 +63,13 @@ class EventController extends Controller
     {
         $types = config('constants.EVENT.TYPES');
 
+        $locations = Location::get();
+
         $event_categories = EventCategory::get();
         return view('admin.pages.events.edit', [
             'event' => $event,
             'types' => $types,
+            'locations' => $locations,
             'event_categories' => $event_categories
         ]);
     }
@@ -83,6 +87,17 @@ class EventController extends Controller
 
         // Change to event_category_id
         $data['event_category_id'] = $data['event_category'];
+
+        if (!isset($data['location'])) {
+            $location = Location::where('name', $data['location_select'])->first();
+
+            if ($location) {
+                $data['location'] = $location->name;
+                $data['location_id'] = $location->id;
+            }
+        } else {
+            $data['location_id'] = null;
+        }
 
         $event->update($data);
 

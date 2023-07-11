@@ -27,6 +27,8 @@ return new class extends Migration
             $table->longText('description');
             $table->string('banner', 500)->nullable();
             $table->string('certificate_link', 500)->nullable();
+            $table->tinyInteger('is_approved')->default(0);
+            $table->foreignId('location_id')->nullable()->default(null)->constrained('locations')->nullOnDelete();
             $table->foreignId('organization_id')->constrained('organizations')->cascadeOnDelete();
             $table->foreignId('event_category_id')->constrained('event_categories')->cascadeOnDelete();
             $table->timestamps();

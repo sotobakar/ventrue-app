@@ -10,10 +10,12 @@ use App\Http\Requests\Organization\Event\UpdateEventRequest;
 use App\Models\Event;
 use App\Models\EventCategory;
 use App\Models\EventMaterial;
+use App\Models\Location;
 use App\Services\ImageService;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 use Intervention\Image\Facades\Image;
@@ -40,9 +42,12 @@ class EventController extends Controller
     {
         $types = ['online', 'offline', 'hybrid'];
 
+        $locations = Location::get();
+
         $event_categories = EventCategory::get();
         return view('organization.pages.events.create', [
             'types' => $types,
+            'locations' => $locations,
             'event_categories' => $event_categories
         ]);
     }
@@ -58,7 +63,8 @@ class EventController extends Controller
             'banner' => ['required', 'image', 'dimensions:min_width=400,min_height=200'],
             'type' => ['required', 'string', Rule::in(['offline', 'online', 'hybrid'])],
             'event_category' => ['required', 'exists:event_categories,id'],
-            'location' => ['required'],
+            'location_select' => ['required'],
+            'location' => ['sometimes'],
             'meeting_link' => ['sometimes'],
             'start' => ['required'],
             'end' => ['required'],
@@ -70,6 +76,29 @@ class EventController extends Controller
         $validated['event_category_id'] = $validated['event_category'];
         $validated['organization_id'] = $request->user()->organization->id;
 
+        if (!isset($validated['location'])) {
+            $location = Location::where('name', $validated['location_select'])->first();
+
+            if ($location) {
+                $clash = DB::table('events as a')
+                    ->where('a.start', '<=', $validated['start'])
+                    ->where('a.end', '>=', $validated['end'])
+                    ->where('a.location_id', '=', $location->id)
+                    ->where('a.type', '<>', 'online')
+                    ->select('a.id', 'a.name', 'a.location')
+                    ->first();
+
+                if ($clash) {
+                    return back()->withErrors(['Acara anda bentrok dengan acara ' . $clash->name . ' di ruangan ' . $clash->location]);
+                }
+
+                $validated['location'] = $location->name;
+                $validated['location_id'] = $location->id;
+            }
+        } else {
+            $validated['location_id'] = null;
+        }
+        
         // Store image
         $file = $validated['banner'];
         $resized_image = Image::make($file->getPathName())
@@ -114,10 +143,13 @@ class EventController extends Controller
     {
         $types = config('constants.EVENT.TYPES');
 
+        $locations = Location::get();
+
         $event_categories = EventCategory::get();
         return view('organization.pages.events.edit', [
             'event' => $event,
             'types' => $types,
+            'locations' => $locations,
             'event_categories' => $event_categories
         ]);
     }
@@ -135,6 +167,17 @@ class EventController extends Controller
 
         // Change to event_category_id
         $data['event_category_id'] = $data['event_category'];
+
+        if (!isset($data['location'])) {
+            $location = Location::where('name', $data['location_select'])->first();
+
+            if ($location) {
+                $data['location'] = $location->name;
+                $data['location_id'] = $location->id;
+            }
+        } else {
+            $data['location_id'] = null;
+        }
 
         $event->update($data);
 
@@ -309,7 +352,8 @@ class EventController extends Controller
      * Update certificate link
      * 
      */
-    public function update_certificate_link(Request $request, Event $event) {
+    public function update_certificate_link(Request $request, Event $event)
+    {
         $event->update([
             'certificate_link' => $request->input('certificate_link')
         ]);

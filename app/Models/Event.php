@@ -18,7 +18,7 @@ class Event extends Model
      *
      * @var array
      */
-    protected $fillable = ['name', 'banner', 'location', 'meeting_link', 'type', 'registration_start', 'registration_end', 'start', 'end', 'description', 'organization_id', 'event_category_id', 'attendance_open', 'certificate_link'];
+    protected $fillable = ['name', 'banner', 'location', 'meeting_link', 'type', 'registration_start', 'registration_end', 'start', 'end', 'description', 'organization_id', 'event_category_id', 'attendance_open', 'certificate_link', 'location_id', 'is_approved'];
 
     /**
      * Get the event's status.
@@ -146,6 +146,15 @@ class Event extends Model
     public function approval()
     {
         return $this->hasOne(EventApproval::class, 'event_id');
+    }
+
+    /**
+     * The location of the event
+     * 
+     */
+    public function location()
+    {
+        return $this->belongsTo(Location::class, 'location_id', 'id');
     }
 
     /**

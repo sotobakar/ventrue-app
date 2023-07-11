@@ -16,6 +16,13 @@ use App\Http\Controllers\Admin\ContentController as AdminContentController;
 use App\Http\Controllers\Admin\StudentController as AdminStudentController;
 use App\Http\Controllers\Admin\OrganizationController as AdminOrganizationController;
 use App\Http\Controllers\Admin\ApprovalController as AdminApprovalController;
+use App\Http\Controllers\BiroUmum\AuthController as BiroUmumAuthController;
+use App\Http\Controllers\BiroUmum\LocationController as BiroUmumLocationController;
+use App\Http\Controllers\BiroUmum\DashboardController as BiroUmumDashboardController;
+use App\Http\Controllers\BiroUmum\LocationScheduleController as BiroUmumLocationScheduleController;
+use App\Http\Controllers\BiroAkpk\AuthController as BiroAkpkAuthController;
+use App\Http\Controllers\BiroAkpk\ApprovalController as BiroAkpkApprovalController;
+use App\Http\Controllers\BiroAkpk\DashboardController as BiroAkpkDashboardController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -240,5 +247,64 @@ Route::prefix('/admin')->group(function () {
 
         // Setuju Proposal (URL dari email)
         Route::get('/persetujuan/{approval}', [AdminApprovalController::class, 'approve'])->name('admin.approvals.approve')->withoutMiddleware(['admin']);
+    });
+});
+
+// Biro Umum Section
+Route::prefix('/biroumum')->group(function () {
+    // Authentication
+    Route::get('/login', [BiroUmumAuthController::class, 'loginPage'])->name('biroumum.login');
+    Route::post('/login', [BiroUmumAuthController::class, 'login']);
+    Route::get('/logout', [BiroUmumAuthController::class, 'logout'])->name('biroumum.logout');
+
+    Route::middleware(['biroumum'])->group(function () {
+        Route::get('/', [BiroUmumDashboardController::class, 'dashboard'])->name('biroumum.dashboard');
+
+        // List Lokasi
+        Route::get('/lokasi', [BiroUmumLocationController::class, 'index'])->name('biroumum.locations');
+
+        // Form Create Lokasi
+        Route::get('/lokasi/buat', [BiroUmumLocationController::class, 'create'])->name('biroumum.locations.create');
+
+        // Detail Lokasi
+        Route::get('/lokasi/{location}', [BiroUmumLocationController::class, 'show'])->name('biroumum.locations.detail');
+
+        // Create Lokasi
+        Route::post('/lokasi', [BiroUmumLocationController::class, 'store']);
+
+        // Form Edit Lokasi
+        Route::get('/lokasi/{location}/edit', [BiroUmumLocationController::class, 'edit'])->name('biroumum.locations.edit');
+
+        // Update Lokasi
+        Route::put('/lokasi/{location}', [BiroUmumLocationController::class, 'update'])->name('biroumum.locations.update');
+
+        // Hapus Lokasi
+        Route::delete('/lokasi/{location}', [BiroUmumLocationController::class, 'delete'])->name('biroumum.locations.delete');
+
+        Route::prefix('/jadwal_bentrok')->group(function () {
+            // List Jadwal di Ruangan
+            Route::get('/', [BiroUmumLocationScheduleController::class, 'index'])->name('biroumum.schedules.clash');
+        });
+    });
+});
+
+// Biro AKPK Section
+Route::prefix('/biroakpk')->group(function () {
+    // Authentication
+    Route::get('/login', [BiroAkpkAuthController::class, 'loginPage'])->name('biroakpk.login');
+    Route::post('/login', [BiroAkpkAuthController::class, 'login']);
+    Route::get('/logout', [BiroAkpkAuthController::class, 'logout'])->name('biroakpk.logout');
+
+    Route::middleware(['biroakpk'])->group(function () {
+        Route::get('/', [BiroAkpkDashboardController::class, 'dashboard'])->name('biroakpk.dashboard');
+
+        Route::prefix('/persetujuan')->group(function () {
+            // List Acara yang belum disetujui
+            Route::get('/', [BiroAkpkApprovalController::class, 'index'])->name('biroakpk.approvals');
+
+            Route::post('/{event:id}/approve', [BiroAkpkApprovalController::class, 'approve'])->name('biroakpk.approvals.approve');
+
+            Route::get('/{event:id}', [BiroAkpkApprovalController::class, 'detail'])->name('biroakpk.approvals.detail');
+        });
     });
 });

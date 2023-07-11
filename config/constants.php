@@ -14,12 +14,12 @@ return [
         'path' => 'ormawa/acara*',
         'icon' => 'fa-calendar'
       ],
-      'APPROVAL' => [
-        'name' => 'Persetujuan',
-        'route' => 'organization.approvals',
-        'path' => 'ormawa/persetujuan*',
-        'icon' => 'fa-check'
-      ],
+      // 'APPROVAL' => [
+      //   'name' => 'Persetujuan',
+      //   'route' => 'organization.approvals',
+      //   'path' => 'ormawa/persetujuan*',
+      //   'icon' => 'fa-check'
+      // ],
       'PROFILE' => [
         'name' => 'Profil',
         'route' => 'organization.profile',
@@ -64,16 +64,62 @@ return [
         'path' => 'admin/konten*',
         'icon' => 'fa-ad'
       ],
-      'APPROVER' => [
-        'name' => 'Penyetuju',
-        'route' => 'admin.approvers',
-        'path' => 'admin/penyetuju*',
-        'icon' => 'fa-check'
-      ],
+      // 'APPROVER' => [
+      //   'name' => 'Penyetuju',
+      //   'route' => 'admin.approvers',
+      //   'path' => 'admin/penyetuju*',
+      //   'icon' => 'fa-check'
+      // ],
       'LOGOUT' => [
         'name' => 'Logout',
         'route' => 'admin.logout',
         'path' => 'admin/logout',
+        'icon' => 'fa-sign-out'
+      ],
+    ],
+    'BIROUMUM' => [
+      'HOME' => [
+        'name' => 'Dashboard',
+        'route' => 'biroumum.dashboard',
+        'path' => 'biroumum',
+        'icon' => 'fa-home'
+      ],
+      'LOKASI' => [
+        'name' => 'Lokasi',
+        'route' => 'biroumum.locations',
+        'path' => 'biroumum/lokasi*',
+        'icon' => 'fa-map-marker-alt'
+      ],
+      'JADWAL' => [
+        'name' => 'Jadwal Bentrok',
+        'route' => 'biroumum.schedules.clash',
+        'path' => 'biroumum/jadwal_bentrok*',
+        'icon' => 'fa-calendar-times'
+      ],
+      'LOGOUT' => [
+        'name' => 'Logout',
+        'route' => 'biroumum.logout',
+        'path' => 'biroumum/logout',
+        'icon' => 'fa-sign-out'
+      ],
+    ],
+    'BIROAKPK' => [
+      'HOME' => [
+        'name' => 'Dashboard',
+        'route' => 'biroakpk.dashboard',
+        'path' => 'biroakpk',
+        'icon' => 'fa-home'
+      ],
+      'PERSETUJUAN' => [
+        'name' => 'Menunggu Persetujuan',
+        'route' => 'biroakpk.approvals',
+        'path' => 'biroakpk/persetujuan*',
+        'icon' => 'fa-thumbs-up'
+      ],
+      'LOGOUT' => [
+        'name' => 'Logout',
+        'route' => 'biroakpk.logout',
+        'path' => 'biroakpk/logout',
         'icon' => 'fa-sign-out'
       ],
     ],

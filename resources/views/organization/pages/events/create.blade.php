@@ -50,11 +50,23 @@
                         </select>
                     </div>
                 </div>
-                <div class="sm:col-span-2">
+                <div x-data="{ location: '' }" class="sm:col-span-2">
                     <label for="location" class="block text-sm font-medium text-gray-700">Lokasi</label>
                     <div class="mt-1">
-                        <input type="text" required name="location" id="location" autocomplete="location"
-                            class="block w-full rounded-md border border-gray-300 py-3 px-4 shadow-sm focus:border-pink-500 focus:ring-pink-500">
+                        <select x-model="location" x-init=" location = $el.options[$el.selectedIndex || $el.options.length - 1].value" required name="location_select"
+                            class="mt-2 block w-full rounded-md border-0 py-3 pl-4 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-pink-600 sm:text-sm sm:leading-6">
+                            @foreach ($locations as $location)
+                                <option value="{{ $location->name }}">{{ $location->name }}</option>
+                            @endforeach
+                            <option value="Lainnya">Lainnya</option>
+                        </select>
+                    </div>
+                    <div class="mt-2">
+                        <template x-if="location == 'Lainnya'">
+                            <input type="text" placeholder="Masukkan nama lokasi anda disini (diluar Kampus)" required
+                                name="location" id="location" autocomplete="location"
+                                class="block w-full rounded-md border border-gray-300 py-3 px-4 shadow-sm focus:border-pink-500 focus:ring-pink-500">
+                        </template>
                     </div>
                 </div>
                 <div class="sm:col-span-2" x-show="type != 'offline'">

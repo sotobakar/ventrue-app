@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Event;
 use App\Models\EventCategory;
+use App\Models\Location;
 use App\Models\Organization;
 use Carbon\Carbon;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -66,6 +67,17 @@ class EventSeeder extends Seeder
             ],
             [
                 'data' => [
+                    'name' => 'Basket Malam Tim B',
+                    'location' => 'Lapangan Basket UPNVJ Pondok Labu',
+                    'type' => 'offline',
+                    'banner' => 'events/images/basketball.jpg',
+                    'description' => 'Mari basket bersama dengan Basket UPNVJ. Terbuka untuk seluruh mahasiswa UPN.'
+                ],
+                'organization' => 'Basket Veteran Jakarta',
+                'event_category' => 'Hiburan'
+            ],
+            [
+                'data' => [
                     'name' => 'Pameran (Science Fair) Fakultas Teknik UPNVJ',
                     'location' => 'Parkiran Kampus Limo',
                     'type' => 'offline',
@@ -81,6 +93,12 @@ class EventSeeder extends Seeder
             $event['data']['event_category_id'] = EventCategory::where('name', $event['event_category'])->first()->id;
 
             $event['data']['organization_id'] = Organization::where('name', $event['organization'])->first()->id;
+
+            $location = Location::where('name', $event['data']['location'])->first();
+
+            if ($location) {
+                $event['data']['location_id'] = $location->id;
+            }
 
             for ($i = -1; $i < 4; $i++) {
                 Event::create(array_merge($event['data'], [

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Event;
 use App\Models\EventCategory;
 use Carbon\Carbon;
+use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Spatie\QueryBuilder\AllowedFilter;
@@ -46,7 +47,10 @@ class EventController extends Controller
                 'type',
                 AllowedFilter::scope('from')->default(now()),
                 AllowedFilter::scope('to')
-            ]);
+            ])
+            ->whereHas('approval', function (Builder $query) {
+                $query->where('approved_at', '<>', null);
+            });
 
 
         $events = $query->where('start', '>', \Carbon\Carbon::now())
@@ -73,7 +77,7 @@ class EventController extends Controller
             // Check if student registered to the event
             $studentRegistered = $event->participants()->where('id', $request->user()->student->id)->exists();
 
-            if ($studentRegistered) { 
+            if ($studentRegistered) {
                 return redirect()->route('student.my_events.detail', ['event' => $event]);
             }
         }

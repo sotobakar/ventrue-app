@@ -15,13 +15,14 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         // Create Roles
-        $roles = ['student', 'organization', 'admin'];
+        $roles = ['student', 'organization', 'admin', 'biroumum', 'biroakpk'];
 
         foreach ($roles as $role) {
             Role::create(['name' => $role]);
         }
 
         $this->call([
+            LocationSeeder::class,
             FacultySeeder::class,
             OrganizationSeeder::class,
             EventCategorySeeder::class,
@@ -34,7 +35,9 @@ class DatabaseSeeder extends Seeder
             EventMaterialSeeder::class,
             HighlightedEventSeeder::class,
             ApproverSeeder::class,
-            EventApprovalSeeder::class
+            EventApprovalSeeder::class,
+            BiroUmumSeeder::class,
+            BiroAkpkSeeder::class,
         ]);
     }
 }
