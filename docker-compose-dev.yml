@@ -1,0 +1,33 @@
+services:
+  php:
+    build: 
+      context: .
+      dockerfile: ./docker/php-fpm/Dockerfile
+    depends_on:
+      - db
+    ports:
+      - 8000:8000
+      - 5173:5173
+    volumes:
+      - ./:/var/www
+    env_file:
+      - .env
+    command: sh -c "npm run build && php artisan serve --host 0.0.0.0"
+  db:
+    image: mysql:8.0
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: ventrue
+      MYSQL_DATABASE: ventrue_app
+    volumes:
+      - db_data:/var/lib/mysql
+  mailhog:
+    image: mailhog/mailhog:latest
+    environment:
+      - VIRTUAL_HOST=mailhog.patricksantino.com
+      - VIRTUAL_PORT=8025
+      - LETSENCRYPT_HOST=mailhog.patricksantino.com
+
+volumes:
+  db_data:
